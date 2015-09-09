@@ -66,11 +66,17 @@ before_install:
  - echo "Fixing permissions on Python eggs cache folder"
  - mkdir -p "$HOME/.python-eggs"
  - chmod 700 "$HOME/.python-eggs" 
- - echo "Downloading and setting up MIRA4..."
+ - echo "Downloading and setting up MIRA 3.4..."
+ - cd ${TRAVIS_BUILD_DIR}
+ - wget http://downloads.sourceforge.net/project/mira-assembler/MIRA/Older%20releases/V3.4.0/mira_3.4.1.1_prod_linux-gnu_x86_64_static.tar.bz2
+ - tar -jxvf mira_3.4.1.1_prod_linux-gnu_x86_64_static.tar.bz2
+ - export PATH=$PWD/mira_3.4.1.1_prod_linux-gnu_x86_64_static/bin/:$PATH
+ - echo "Downloading and setting up MIRA 4.0..."
  - cd ${TRAVIS_BUILD_DIR}
  - wget http://downloads.sourceforge.net/project/mira-assembler/MIRA/stable/mira_4.0.2_linux-gnu_x86_64_static.tar.bz2
  - tar -jxvf mira_4.0.2_linux-gnu_x86_64_static.tar.bz2
  - export MIRA4=$PWD/mira_4.0.2_linux-gnu_x86_64_static/bin/
+ - echo "Downloading and setting up MIRA 4.9..."
  - wget http://downloads.sourceforge.net/project/mira-assembler/MIRA/development/mira_4.9.5_2_linux-gnu_x86_64_static.tar.bz2
  - tar -jxvf mira_4.9.5_2_linux-gnu_x86_64_static.tar.bz2
  - export MIRA4_9=$PWD/mira_4.9.5_2_linux-gnu_x86_64_static/bin/
