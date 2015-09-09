@@ -122,6 +122,11 @@ install:
  - ln -s ${TRAVIS_BUILD_DIR}/.travis.tool_conf.xml tool_conf.xml
  - rm -f config/tool_conf.xml.sample
  - ln -s ${TRAVIS_BUILD_DIR}/.travis.tool_conf.xml config/tool_conf.xml.sample
+ - mkdir /tmp/unwanted_tools
+ - for i in $( ls tools/ ); do mv tools/$i /tmp/unwanted_tools/$i ; done
+ - mkdir tools/data_source
+ - mv /tmp/unwanted_tools/data_source/upload.xml tools/data_source/upload.xml
+ - mv /tmp/unwanted_tools/data_source/upload.py tools/data_source/upload.py
  - for i in $( ls ${TRAVIS_BUILD_DIR}/tools/ ); do ln -s ${TRAVIS_BUILD_DIR}/tools/$i/ tools/$i ; done
  - ln -s ${TRAVIS_BUILD_DIR}/datatypes/mira_datatypes/mira.py lib/galaxy/datatypes/mira.py
  - ln -s ${TRAVIS_BUILD_DIR}/.travis.datatypes_conf.xml datatypes_conf.xml
