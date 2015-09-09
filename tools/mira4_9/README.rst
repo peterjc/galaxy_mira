@@ -89,23 +89,23 @@ Developers
 ==========
 
 Development is on a dedicated GitHub repository:
-https://github.com/peterjc/pico_galaxy/tree/master/tools/mira_assembler_4_9
+https://github.com/peterjc/galaxy_mira/tree/master/tools/mira4_9
 
 For pushing a release to the test or main "Galaxy Tool Shed", use the following
 Planemo commands (which requires you have set your Tool Shed access details in
 ``~/.planemo.yml`` and that you have access rights on the Tool Shed)::
 
-    $ planemo shed_update -t testtoolshed --check_diff ~/repositories/pico_galaxy/tools/mira4_9/
+    $ planemo shed_update -t testtoolshed --check_diff tools/mira4_9/
     ...
 
 or::
 
-    $ planemo shed_update -t toolshed --check_diff ~/repositories/pico_galaxy/tools/mira4_9/
+    $ planemo shed_update -t toolshed --check_diff tools/mira4_9/
     ...
 
 To just build and check the tar ball, use::
 
-    $ planemo shed_upload --tar_only  ~/repositories/pico_galaxy/tools/mira4_9/
+    $ planemo shed_upload --tar_only mira4_9/
     ...
     $ tar -tzf shed_upload.tar.gz 
     ...

@@ -1,7 +1,7 @@
 name: mira_assembler
 owner: peterjc
 homepage_url: http://chevreux.org/projects_mira.html
-remote_repository_url: https://github.com/peterjc/pico_galaxy/tree/master/tools/mira3/
+remote_repository_url: https://github.com/peterjc/galaxy_mira/tree/master/tools/mira3/
 description: Assemble with MIRA v3. Takes Sanger, Roche, and Illumina data
 long_description: |
   Wrapper for core functionality of assembly tool MIRA 3.4.

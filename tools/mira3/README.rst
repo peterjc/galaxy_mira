@@ -94,24 +94,24 @@ Developers
 This script and related tools were initially developed on the following hg branch:
 http://bitbucket.org/peterjc/galaxy-central/src/tools
 
-Development has now moved to a dedicated GitHub repository:
-https://github.com/peterjc/pico_galaxy/tree/master/tools/mira_3_4
+For some time developement continued at https://github.com/peterjc/pico_galaxy but
+is now in a dedicated GitHub repository: https://github.com/peterjc/galaxy_mira
 
 For pushing a release to the test or main "Galaxy Tool Shed", use the following
 Planemo commands (which requires you have set your Tool Shed access details in
 ``~/.planemo.yml`` and that you have access rights on the Tool Shed)::
 
-    $ planemo shed_update -t testtoolshed --check_diff ~/repositories/pico_galaxy/tools/mira3/
+    $ planemo shed_update -t testtoolshed --check_diff tools/mira3/
     ...
 
 or::
 
-    $ planemo shed_update -t toolshed --check_diff ~/repositories/pico_galaxy/tools/mira3/
+    $ planemo shed_update -t toolshed --check_diff tools/mira3/
     ...
 
 To just build and check the tar ball, use::
 
-    $ planemo shed_upload --tar_only  ~/repositories/pico_galaxy/tools/mira3/
+    $ planemo shed_upload --tar_only tools/mira3/
     ...
     $ tar -tzf shed_upload.tar.gz 
     test-data/empty_file.dat

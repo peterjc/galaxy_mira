@@ -1,7 +1,7 @@
 name: mira4_assembler
 owner: peterjc
 homepage_url: http://chevreux.org/projects_mira.html
-remote_repository_url: https://github.com/peterjc/pico_galaxy/tree/master/tools/mira4_0
+remote_repository_url: https://github.com/peterjc/galaxy_mira/tree/master/tools/mira4_0
 description: MIRA 4.0 assembler
 long_description: |
   Wrapper for core functionality of assembly tool MIRA 4.0. Accepts data
