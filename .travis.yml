@@ -139,23 +139,15 @@ install:
 # =======================
 #
 # Having setup our Galaxy with a minimal tool_conf.xml / tool_conf.xml.sample
-# we call run_functional_tests.sh to run just our tests (grouped under a
+# we could run_functional_tests.sh to run just our tests (grouped under a
 # common section "travis" in the XML file for this purpose).
 #
 # ./run_functional_tests.sh -sid Continuous-Integration-Travis
 #
-# calls:
-#
-# python ./scripts/functional_tests.py --with-nosehtml --html-report-file run_functional_tests.html -v `python tool_list.py Continuous-Integration-Travis`
-#
-# That gives an error sadly under Travis,
-# functional_tests.py: error: no such option: --with-nosehtml
-# And also,
-# functional_tests.py: error: no such option: --html-report-file
-# Perhaps Galaxy's nose egg isn't being fetched?
+# But since we're testing everything, planemo test should work too:
 
 script:
- - python ./scripts/functional_tests.py -v `python tool_list.py Continuous-Integration-Travis`
+ - planemo test ${TRAVIS_BUILD_DIR}/tools/
 
 #The email defaults are too talkative while we're getting Travis working nicely.
 notifications:
