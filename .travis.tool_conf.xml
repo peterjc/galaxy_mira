@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<toolbox>
+  <section name="Get Data" id="getext">
+    <tool file="data_source/upload.xml"/>
+  </section>
+  <section name="Continuous-Integration" id="Travis">
+    <!-- Container section for tools to be tested using TravisCI -->
+    <tool file="mira4_0/mira4_de_novo.xml" />
+    <tool file="mira4_0/mira4_mapping.xml" />
+    <tool file="mira4_0/mira4_convert.xml" />
+    <tool file="mira4_0/mira4_bait.xml" />
+    <tool file="mira4_9/mira_bait_4_9.xml" />
+    <!-- No tests yet (trying gives an error from the framework)
+    <tool file="mira3/mira.xml" />
+    -->
+  </section>
+</toolbox>
