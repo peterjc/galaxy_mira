@@ -15,7 +15,7 @@ long_description: |
   WARNING: This was written to write viral genome assembly and mapping
   pipelines within Galaxy, and while it should work for larger organisms
   like bacteria, the computational load would be much higher. Proceed with
-  caution!
+  caution! And probably look at MIRA 4 or later instead.
 categories:
 - Assembly
 - Next Gen Mappers
