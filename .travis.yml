@@ -152,9 +152,12 @@ script:
 #
 # Should we deploy working tools even if some tools failed?
 # If so, could use after_script here
+#
+# Note to avoid any race conditions between the build matrix
+# jobs, restrict the Test Tool Shed update to one run only:
 
 after_success:
- - ./planemo_ci_update.py
+ if [[ $TRAVIS_PYTHON_VERSION == '2.6' && $GALAXY_BRANCH == 'master']]; then ./planemo_ci_update.py; fi"
 
 #The email defaults are too talkative while we're getting Travis working nicely.
 notifications:
