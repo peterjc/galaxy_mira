@@ -11,6 +11,9 @@ to where Galaxy expects the files) and associated Galaxy wrapper XML file.
 It is available from the Galaxy Tool Shed at:
 http://toolshed.g2.bx.psu.edu/view/peterjc/mira4_9
 
+Development/test previews are available from the Galaxy Test Tool Shed at:
+http://testtoolshed.g2.bx.psu.edu/view/peterjc/mira4_9
+
 It uses a Galaxy datatype definition 'mira' for the MIRA Assembly Format,
 http://toolshed.g2.bx.psu.edu/view/peterjc/mira_datatypes
 
