@@ -27,7 +27,9 @@ def compare_to_tool_shed(tool_folder):
     rc = os.system(cmd)
     # Expect 0 = no changes, 1 = changes, other = error
     # print("planemo shed_diff on %s returned %i for %s" % (tool_shed, rc, tool_folder))
-    return rc == 1
+    # Seems get 0 = no changes, other = changes/error
+    # e.g. 255
+    return bool(rc)
 
 total = 0
 changed = 0
