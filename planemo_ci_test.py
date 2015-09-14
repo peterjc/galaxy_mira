@@ -37,7 +37,7 @@ with open(input_file) as in_handle:
             tool_folder = tool_folder.strip()
             if not os.path.isfile(os.path.join(tool_folder, ".shed.yml")):
                 sys.stderr.write("Missing %s\n" % os.path.join(tool_folder, ".shed.yml"))
-            elif push_to_tool_shed(tool_folder):
+            elif test_tool(tool_folder):
                 passed += 1
                 out_handle.write("%s\n" % tool_folder)
 sys.stderr.write("Of %i tools, %i passed testes, saved to %s\n" % (total, passed, output_file))
