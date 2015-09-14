@@ -24,7 +24,7 @@ Automated Installation
 ======================
 
 This should be straightforward. Via the Tool Shed, Galaxy should automatically
-install the `mira` datatype, samtools, and download and install the precompiled
+install the ``mira`` datatype, samtools, and download and install the precompiled
 binary for MIRA v4.9.5 for the Galaxy wrapper, and offer to run any tests.
 
 For MIRA 4, the Galaxy wrapper has been split in two, allowing separate
