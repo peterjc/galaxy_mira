@@ -14,7 +14,11 @@ input_file = "planemo_ci_tested_tools.txt"
 output_file = "planemo_ci_updated_tools.txt"
 tool_shed = "testtoolshed"
 
-shed_key = os.envir["SHEDKEY"]
+try:
+    shed_key = os.environ["SHEDKEY"]
+except KeyError:
+    sys.stderr.write("Missing $SHEDKEY which should be a PRIVATE TravisCI environment variable.")
+    sys.exit(1)
 
 def push_to_tool_shed(tool_folder):
     """Runs planemo shed_update
