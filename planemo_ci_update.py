@@ -27,7 +27,7 @@ def push_to_tool_shed(tool_folder):
 
     Returns False if there were no changes, or an error occured.
     """
-    cmd = "planemo shed_update -t %s -shed_key %s --fail_fast --force_repository_creation %s" % (tool_shed, shed_key, tool_folder)
+    cmd = "planemo shed_update -t %s --shed_key %s --fail_fast --force_repository_creation %s" % (tool_shed, shed_key, tool_folder)
     print(cmd)
     rc = os.system(cmd)
     print("planemo shed_update returned %i for %s" % (rc, tool_folder))
