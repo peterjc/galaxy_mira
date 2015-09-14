@@ -134,6 +134,7 @@ install:
  - ln -s ${TRAVIS_BUILD_DIR}/.travis.datatypes_conf.xml datatypes_conf.xml
  - cp ${TRAVIS_BUILD_DIR}/test-data/* test-data/
  - bash scripts/common_startup.sh --skip-venv --dev-wheels
+ - cp ${TRAVIS_BUILD_DIR}/planemo_ci_* .
 
 
 # Testing tools in Galaxy
