@@ -59,9 +59,9 @@ env:
 before_install:
  - echo "Using planemo lint to check for obvious tool errors"
  - pip install planemo
- - ls -1 packages/*/.shed.yml datatypes/*/.shed.yml tools/*/.shed.yml | sed "s/\.shed\.yml$//g" > all_shed_tools.txt
- - planemo shed_lint --report_level warn --tools --fail_level error $(cat all_shed_tools.txt)
-# - planemo shed_lint --report_level warn --tools --fail_level error --recursive ${TRAVIS_BUILD_DIR}
+ - ./planemo_ci_find.py
+ - ./planemo_ci_lint.py
+ - ./planemo_ci_diff.py
  - echo "Fixing permissions on Python eggs cache folder"
  - mkdir -p "$HOME/.python-eggs"
  - chmod 700 "$HOME/.python-eggs" 
@@ -136,23 +136,20 @@ install:
 # =======================
 #
 # Having setup our Galaxy with a minimal tool_conf.xml / tool_conf.xml.sample
-# we call run_functional_tests.sh to run just our tests (grouped under a
-# common section "travis" in the XML file for this purpose).
-#
-# ./run_functional_tests.sh -sid Continuous-Integration-Travis
-#
-# calls:
-#
-# python ./scripts/functional_tests.py --with-nosehtml --html-report-file run_functional_tests.html -v `python tool_list.py Continuous-Integration-Travis`
-#
-# That gives an error sadly under Travis,
-# functional_tests.py: error: no such option: --with-nosehtml
-# And also,
-# functional_tests.py: error: no such option: --html-report-file
-# Perhaps Galaxy's nose egg isn't being fetched?
+# we call planemo to test those tools which passed linting and have updates.
 
 script:
- - python ./scripts/functional_tests.py -v `python tool_list.py Continuous-Integration-Travis`
+ - ./planemo_ci_test.py
+
+
+# Pushing updated tested tools to Tool Shed
+# =========================================
+#
+# Should we deploy working tools even if some tools failed?
+# If so, could use after_script here
+
+after_success:
+ - ./planemo_ci_update.py
 
 #The email defaults are too talkative while we're getting Travis working nicely.
 notifications:
