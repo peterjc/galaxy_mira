@@ -153,7 +153,7 @@ script:
 # jobs, restrict the Test Tool Shed update to one run only:
 
 after_success:
- - "if [[ $TRAVIS_PYTHON_VERSION == '2.6' && $GALAXY_BRANCH == 'dev' ]]; then ./planemo_ci_update.py; fi"
+ - "if [[ $TRAVIS_PYTHON_VERSION == '2.7' && $GALAXY_BRANCH == 'master' ]]; then ./planemo_ci_update.py; fi"
 
 #The email defaults are too talkative while we're getting Travis working nicely.
 notifications:
