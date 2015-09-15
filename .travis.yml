@@ -130,8 +130,8 @@ install:
  - cp ${TRAVIS_BUILD_DIR}/test-data/* test-data/
  - ./run.sh --stop-daemon || true
  - python scripts/fetch_eggs.py
- - ls -l planemo_ci_*
- - ls -l ${TRAVIS_BUILD_DIR}/planemo_ci_*
+ - ls -l planemo_ci_* ; true
+ - ls -l ${TRAVIS_BUILD_DIR}/planemo_ci_* ; true
  - cp ${TRAVIS_BUILD_DIR}/planemo_ci_* .
 
 
@@ -143,7 +143,7 @@ install:
 
 before_script:
  - pwd
- - ls -l planemo_ci_*
+ - ls -l planemo_ci_* ; true
  - ./planemo_ci_test.py
 
 script:
