@@ -130,6 +130,8 @@ install:
  - cp ${TRAVIS_BUILD_DIR}/test-data/* test-data/
  - ./run.sh --stop-daemon || true
  - python scripts/fetch_eggs.py
+ - ls -l planemo_ci_*
+ - ls -l ${TRAVIS_BUILD_DIR}/planemo_ci_*
  - cp ${TRAVIS_BUILD_DIR}/planemo_ci_* .
 
 
@@ -140,6 +142,8 @@ install:
 # we call planemo to test those tools which passed linting and have updates.
 
 before_script:
+ - pwd
+ - ls -l planemo_ci_*
  - ./planemo_ci_test.py
 
 script:
