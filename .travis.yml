@@ -130,8 +130,6 @@ install:
  - cp ${TRAVIS_BUILD_DIR}/test-data/* test-data/
  - ./run.sh --stop-daemon || true
  - python scripts/fetch_eggs.py
- - cp ${TRAVIS_BUILD_DIR}/planemo_ci_* .
-
 
 # Testing tools in Galaxy
 # =======================
@@ -141,10 +139,11 @@ install:
 
 before_script:
  - cd ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH}
+ - cp ${TRAVIS_BUILD_DIR}/planemo_ci_* .
  - ./planemo_ci_test.py
+ - cp planemo_ci_tested_tools.txt ${TRAVIS_BUILD_DIR}/
 
 script:
- - cd ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH}
  - ./planemo_ci_report.py
 
 
