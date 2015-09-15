@@ -135,6 +135,7 @@ install:
  - ln -s ${TRAVIS_BUILD_DIR}/.travis.datatypes_conf.xml datatypes_conf.xml
  - cp ${TRAVIS_BUILD_DIR}/test-data/* test-data/
  - bash scripts/common_startup.sh --skip-venv --dev-wheels
+ - cd ${TRAVIS_BUILD_DIR}
 
 # Testing tools in Galaxy
 # =======================
@@ -143,10 +144,7 @@ install:
 # we call planemo to test those tools which passed linting and have updates.
 
 before_script:
- - cd ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH}
- - cp ${TRAVIS_BUILD_DIR}/planemo_ci_* .
  - ./planemo_ci_test.py
- - cp planemo_ci_tested_tools.txt ${TRAVIS_BUILD_DIR}/
 
 script:
  - ./planemo_ci_report.py
