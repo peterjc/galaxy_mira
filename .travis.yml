@@ -130,8 +130,6 @@ install:
  - cp ${TRAVIS_BUILD_DIR}/test-data/* test-data/
  - ./run.sh --stop-daemon || true
  - python scripts/fetch_eggs.py
- - ls -l planemo_ci_* ; true
- - ls -l ${TRAVIS_BUILD_DIR}/planemo_ci_* ; true
  - cp ${TRAVIS_BUILD_DIR}/planemo_ci_* .
 
 
@@ -142,11 +140,11 @@ install:
 # we call planemo to test those tools which passed linting and have updates.
 
 before_script:
- - pwd
- - ls -l planemo_ci_* ; true
+ - cd ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH}
  - ./planemo_ci_test.py
 
 script:
+ - cd ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH}
  - ./planemo_ci_report.py
 
 
