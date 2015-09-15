@@ -145,6 +145,7 @@ install:
 
 script:
  - ./planemo_ci_test.py
+ - ./planemo_ci_report.py
 
 
 # Pushing updated tested tools to Tool Shed
