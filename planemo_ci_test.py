@@ -14,6 +14,12 @@ import time
 input_file = "planemo_ci_changed_tools.txt"
 output_file = "planemo_ci_tested_tools.txt"
 
+try:
+    galaxy_root = os.environ["GALAXY_ROOT"]
+except KeyError:
+    sys.stderr.write("Missing $GALAXT_ROOT environment variable.")
+    sys.exit(1)
+
 def test_tool(tool_folder):
     """Runs planemo test
 
@@ -23,7 +29,7 @@ def test_tool(tool_folder):
     will show the verbose stdout/stderr to see the error.
     """
     test_output = "%s/.planemo_test.txt" % tool_folder
-    cmd = "planemo test %s &> %s" % (tool_folder, test_output)
+    cmd = "planemo test --galaxy_root %s %s &> %s" % (galaxy_root, tool_folder, test_output)
     print(cmd)
     start = time.time()
     rc = os.system(cmd)
