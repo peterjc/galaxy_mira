@@ -15,6 +15,12 @@ input_file = "planemo_ci_valid_tools.txt"
 output_file = "planemo_ci_changed_tools.txt"
 tool_shed = "testtoolshed"
 
+def check_git_message():
+    cmd = 'git log -1 --pretty=%s%n%b | grep -i "test all" > /dev/null'
+    rc = os.system(cmd)
+    # Expect 0 = matches, 1 = no matches
+    return not bool(rc)
+
 def compare_to_tool_shed(tool_folder):
     """Runs planemo shed_diff
 
@@ -34,7 +40,11 @@ def compare_to_tool_shed(tool_folder):
 total = 0
 changed = 0
 print("=" * 60)
-print("Running planemo shed_diff to look for updated tools...")
+skip_diff = check_git_message()
+if skip_diff:
+    print("Skipping planemo shed_diff, assuming all tools to be tested...")
+else:
+    print("Running planemo shed_diff to look for updated tools...")
 with open(input_file) as in_handle:
     with open(output_file, "w") as out_handle:
         for tool_folder in in_handle:
@@ -42,8 +52,13 @@ with open(input_file) as in_handle:
             tool_folder = tool_folder.strip()
             if not os.path.isfile(os.path.join(tool_folder, ".shed.yml")):
                 sys.stderr.write("Missing %s\n" % os.path.join(tool_folder, ".shed.yml"))
+            elif skip_diff:
+                out_handle.write("%s\n" % tool_folder)
             elif compare_to_tool_shed(tool_folder):
                 changed += 1
                 print(" - changes in %s" % tool_folder)
                 out_handle.write("%s\n" % tool_folder)
-sys.stderr.write("Of %i tools in %s, %i changed vs %s, saved to %s\n" % (total, input_file, changed, tool_shed, output_file))
+if skip_diff:
+    sys.stderr.write("Of %i tools in %s, assuming all tools to be tested, saved to %s\n" % (total, input_file, output_file))
+else:
+    sys.stderr.write("Of %i tools in %s, %i changed vs %s, saved to %s\n" % (total, input_file, changed, tool_shed, output_file))
