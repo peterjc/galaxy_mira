@@ -143,8 +143,10 @@ install:
 # Having setup our Galaxy with a minimal tool_conf.xml / tool_conf.xml.sample
 # we call planemo to test those tools which passed linting and have updates.
 
-script:
+before_script:
  - ./planemo_ci_test.py
+
+script:
  - ./planemo_ci_report.py
 
 
@@ -152,7 +154,10 @@ script:
 # =========================================
 #
 # Should we deploy working tools even if some tools failed?
-# If so, could use after_script here
+# If so, could use after_script here - note that planemo_ci_report.py
+# will set a failure return code if any tools failed linting or testing
+# (don't want to push tool updates if there could be problems in their
+# dependencies).
 #
 # Note to avoid any race conditions between the build matrix
 # jobs, restrict the Test Tool Shed update to one run only:
