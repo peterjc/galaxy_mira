@@ -144,9 +144,11 @@ install:
 # we call planemo to test those tools which passed linting and have updates.
 
 before_script:
+ - cd ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH}
  - ./planemo_ci_test.py
 
 script:
+ - cd ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH}
  - ./planemo_ci_report.py
 
 
