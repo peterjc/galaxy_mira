@@ -17,7 +17,7 @@ output_file = "planemo_ci_tested_tools.txt"
 try:
     galaxy_root = os.environ["GALAXY_ROOT"]
 except KeyError:
-    sys.stderr.write("Missing $GALAXT_ROOT environment variable.")
+    sys.stderr.write("Missing $GALAXY_ROOT environment variable.")
     sys.exit(1)
 
 def test_tool(tool_folder):
