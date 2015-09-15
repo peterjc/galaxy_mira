@@ -40,10 +40,10 @@ Manual Installation
 
 Normally you would install this via the Galaxy ToolShed, which would move
 the provided mira.py file into a suitable location and process the
-datatypes_conf.xml entry to be combined with your local configuration.
+``datatypes_conf.xml`` entry to be combined with your local configuration.
 
 However, if you really want to this should work for a manual install. Add
-the following lines to the datatypes_conf.xml file in the Galaxy main folder::
+the following lines to the ``datatypes_conf.xml`` file in the Galaxy main folder::
 
     <datatype extension="mira" type="galaxy.datatypes.mira:MiraAssemblyFormat" mimetype="text/plain" display_in_upload="true"/>
 
@@ -51,9 +51,9 @@ and later in the sniffer section::
 
     <sniffer type="galaxy.datatypes.mira:MiraAssemblyFormat"/>
 
-Also create the file lib/galaxy/datatypes/mira.py by moving, copying or linking
-the mira.py file provided in this tar-ball.  Finally add 'import mira' near
-the start of file lib/galaxy/datatypes/registry.py (after the other import
+Also create the file ``lib/galaxy/datatypes/mira.py`` by moving, copying or linking
+the mira.py file provided in this tar-ball.  Finally add ``import mira`` near
+the start of file ``lib/galaxy/datatypes/registry.py`` (after the other import
 lines).
 
 
@@ -71,7 +71,7 @@ Development is done on this GitHub repository:
 https://github.com/peterjc/pico_galaxy
 
 For making the "Galaxy Tool Shed" http://toolshed.g2.bx.psu.edu/ tarball I use
-the following command from the mira_datatypes  folder::
+the following command from the ``mira_datatypes`` folder::
 
     $ tar -czf mira_datatypes.tar.gz README.rst datatypes_conf.xml mira.py
 
@@ -83,7 +83,7 @@ Check this worked::
     mira.py
 
 For development, rather than having a local ToolShed running, I currently
-use a symlink from lib/galaxy/datatypes/mira.py to the actual file as
+use a symlink from ``lib/galaxy/datatypes/mira.py`` to the actual file as
 described above.
 
 
