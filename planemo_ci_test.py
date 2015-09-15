@@ -9,6 +9,7 @@ $ planemo shed_test $(cat planemo_changed_tools.txt)
 
 import os
 import sys
+import time
 
 input_file = "planemo_ci_changed_tools.txt"
 output_file = "planemo_ci_tested_tools.txt"
@@ -16,14 +17,20 @@ output_file = "planemo_ci_tested_tools.txt"
 def test_tool(tool_folder):
     """Runs planemo test
 
-    Returns True if tests pass.
+    Returns True if tests pass (and hides stdout/stderr).
 
-    Returns False if tests fail, or an error occured.
+    Returns False if tests fail, or an error occured, and
+    will show the verbose stdout/stderr to see the error.
     """
-    cmd = "planemo test %s" % tool_folder
+    test_output = "%s/.planemo_test.txt" % tool_folder
+    cmd = "planemo test %s &> %s" % (tool_folder, test_output)
     print(cmd)
+    start = time.time()
     rc = os.system(cmd)
-    print("planemo test returned %i for %s" % (rc, tool_folder))
+    taken = time.time() - start
+    print("planemo test returned %i for %s (%0.02fs)" % (rc, tool_folder, taken))
+    if rc:
+        os.system("cat %s" % test_output)
     return not bool(rc)
 
 total = 0
