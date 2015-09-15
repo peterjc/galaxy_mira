@@ -1,27 +1,13 @@
 #!/usr/bin/env python
-"""Planemo Continuous Integration: Find all tools.
+"""Planemo Continuous Integration: Summary of progress
 
-Currently no options.
+Currently no options. Call this after:
+ - ./planemo_ci_find.py
+ - ./planemo_ci_lint.py
+ - ./planemo_ci_diff.py
+ - ./planemo_ci_test.py
 
-Expects list of tool folders via stdin (one line per tool,
-listing folder name containing a ``.shed.yml`` file).
-
-Calls ``planemo lint`` on each tool, producing two output
-files.
-
-Recurses under current directory to find Galaxy tools (which
-we define as directories containing a valid ``.shed.yml`` file,
-a much more narrow definition than planemo itself), writing
-the list of tools to output file ``planemo_ci_all_tools.txt``
-and stdout as plain text, one line per tool listing the
-relative directory.
-
-The will deliberately check ``packages`` and ``datatypes``
-before ``tools`` before ``workflows``, before other.
-
-In essence, a more flexible version of this one-liner:
-
-$ ls -1 packages/*/.shed.yml datatypes/*/.shed.yml tools/*/.shed.yml workflows/*/.shed.yml
+Expect to call planemo_ci_update.py if the report passes.
 """
 
 import sys
@@ -54,7 +40,7 @@ for tool in load_list(all_file):
         print(" - %s - ERROR - failed linting" % tool)
         fail = True
     elif tool not in changed:
-        print(" - %s - has not changed" % tool)
+        print(" - %s - has not changed, not tested" % tool)
     elif tool not in tested:
         print(" - %s - ERROR - failed testing" % tool)
         fail = True
