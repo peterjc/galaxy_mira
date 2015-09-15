@@ -42,7 +42,7 @@ changed = 0
 print("=" * 60)
 skip_diff = check_git_message()
 if skip_diff:
-    print("Skipping planemo shed_diff, assuming all tools to be tested...")
+    print("Skipping planemo shed_diff, git commit message implies all tools to be tested...")
 else:
     print("Running planemo shed_diff to look for updated tools...")
 with open(input_file) as in_handle:
