@@ -62,6 +62,7 @@ before_install:
  - ./planemo_ci_find.py
  - ./planemo_ci_lint.py
  - ./planemo_ci_diff.py
+ - pip install requests
  - echo "Fixing permissions on Python eggs cache folder"
  - mkdir -p "$HOME/.python-eggs"
  - chmod 700 "$HOME/.python-eggs" 
@@ -84,12 +85,6 @@ before_install:
  - wget http://depot.galaxyproject.org/package/linux/x86_64/samtools/samtools-0.1.19-Linux-x86_64.tgz
  - tar -zxvf samtools-0.1.19-Linux-x86_64.tgz
  - export PATH=$PWD/bin/:$PATH
- - echo "Fetching Galaxy ${GALAXY_BRANCH} branch..."
- - cd ${TRAVIS_BUILD_DIR}
- - wget https://codeload.github.com/galaxyproject/galaxy/tar.gz/${GALAXY_BRANCH}
- - tar -zxvf ${GALAXY_BRANCH} | tail
- - cd galaxy-${GALAXY_BRANCH}
- - pip install requests 
 
 # Configuring tools within Galaxy
 # ===============================
@@ -110,14 +105,17 @@ before_install:
 # We setup our sample data in the Galaxy test-data folder by copying them
 # (using symlinks might be faster?)
 #
-
 # We then want to use run.sh to setup all the sample files, fetch eggs etc,
 # but not actually start running Galaxy. One way to do this is by calling
 # "./run.sh --stop-daemon" but must override its error level 1 return value.
 #
 
 install:
- - cd ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH}
+ - echo "Fetching Galaxy ${GALAXY_BRANCH} branch..."
+ - cd ${TRAVIS_BUILD_DIR}
+ - wget https://codeload.github.com/galaxyproject/galaxy/tar.gz/${GALAXY_BRANCH}
+ - tar -zxvf ${GALAXY_BRANCH} | tail
+ - cd galaxy-${GALAXY_BRANCH}
  - export GALAXY_ROOT=$PWD
  - export GALAXY_TEST_UPLOAD_ASYNC=false
  - export GALAXY_TEST_DB_TEMPLATE=https://github.com/jmchilton/galaxy-downloads/raw/master/db_gx_rev_0127.sqlite
