@@ -31,7 +31,7 @@ def test_tool(tool_folder):
     terminal_output = "%s/.planemo_test.log" % tool_folder
     text_output = "%s/.planemo_test.txt" % tool_folder
     md_output = "%s/.planemo_test.md" % tool_folder
-    cmd = "planemo test --galaxy_root %s --tool_test_output_text %s --tool_test_output_markdown %s %s &> %s" \
+    cmd = "planemo test --galaxy_root %s --test_output_text %s --test_output_markdown %s %s &> %s" \
         % (galaxy_root, text_output, md_output, tool_folder, terminal_output)
     print(cmd)
     start = time.time()
@@ -43,6 +43,7 @@ def test_tool(tool_folder):
         os.system("cat %s" % text_output)
         os.system("cat %s" % md_output)
         os.system("cat %s" % terminal_output)  # very long
+        print("planemo test returned %i for %s (%0.02fs)" % (rc, tool_folder, taken))
     return not bool(rc)
 
 total = 0
