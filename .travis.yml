@@ -53,7 +53,10 @@ env:
 # running with an SQLite database.
 #
 # We also need to install our tool dependencies, e.g. NCBI BLAST+ binaries,
-# which we will do manually rather than via a (local) Galaxy Tool Shed.
+# which we will do via "planemo depbash" rather than via a (local) Galaxy
+# Tool Shed. This validates the "tool_dependencies.xml" files, but does
+# not currently allow any reasoning about which dependencies are needed
+# for the tools we want to install and test.
 #
 
 before_install:
