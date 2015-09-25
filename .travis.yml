@@ -57,8 +57,15 @@ env:
 #
 
 before_install:
+ - echo "Installing a development branch of planemo..."
+ - cd /tmp
+ - wget https://codeload.github.com/peterjc/planemo/tar.gz/depbash
+ - tar -zxvf depbash
+ - cd planemo-depbash
+ - pip install -r requirements.txt
+ - python setup.py install
+ - cd ${TRAVIS_BUILD_DIR}
  - echo "Using planemo lint to check for obvious tool errors"
- - pip install planemo
  - ./planemo_ci_find.py
  - ./planemo_ci_lint.py
  - ./planemo_ci_diff.py
