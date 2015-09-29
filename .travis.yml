@@ -53,9 +53,9 @@ env:
 # running with an SQLite database.
 #
 # We also need to install our tool dependencies, e.g. NCBI BLAST+ binaries,
-# which we will do via "planemo depbash" rather than via a (local) Galaxy
-# Tool Shed. This validates the "tool_dependencies.xml" files, but does
-# not currently allow any reasoning about which dependencies are needed
+# which we will do via "planemo dependency_script" rather than via a (local)
+# Galaxy Tool Shed. This validates the "tool_dependencies.xml" files, but
+# does not currently allow any reasoning about which dependencies are needed
 # for the tools we want to install and test.
 #
 
@@ -79,7 +79,7 @@ before_install:
  - echo "Downloading and setting up dependencies..."
  - export INSTALL_DIR=/tmp/dep_install && mkdir $INSTALL_DIR
  - export DOWNLOAD_CACHE=/tmp/download_cache && mkdir $DOWNLOAD_CACHE
- - planemo depbash `cat planemo_ci_valid_tools.txt`
+ - planemo dependency_script `cat planemo_ci_valid_tools.txt`
  - bash dep_install.sh
  - source env.sh
  - echo "Installing samtools..."
