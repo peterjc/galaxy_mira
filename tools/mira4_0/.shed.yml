@@ -34,6 +34,7 @@ include:
   - ../../tools/mira4_0/README.rst
   - ../../tools/mira4_0/mira4.py
   - ../../tools/mira4_0/mira4_bait.py
+  - ../../tools/mira4_0/mira4_bait.xml
   - ../../tools/mira4_0/mira4_convert.py
   - ../../tools/mira4_0/mira4_de_novo.xml
   - ../../tools/mira4_0/mira4_make_bam.py
