@@ -1,0 +1,15 @@
+name: mira4_9_suite
+owner: peterjc
+homepage_url: http://chevreux.org/projects_mira.html
+remote_repository_url: https://github.com/peterjc/galaxy_mira/tree/master/tools/mira4_9
+description: MIRA 4.9 assembler suite
+long_description: |
+  Galaxy Tool Shed suite to install all the wrappers for the MIRA 4.9 assembly suite.
+categories:
+- Assembly
+- Next Gen Mappers
+- Fastq Manipulation
+- Fasta Manipulation
+type: repository_suite_definition 
+include:
+- repository_dependencies.xml
