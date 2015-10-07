@@ -1,46 +1,45 @@
-Galaxy wrapper for the MIRA assembly program (v4.9)
-===================================================
+Galaxy wrapper for the MIRA assembly program (v4.9) mirabait
+============================================================
 
 This tool is copyright 2011-2015 by Peter Cock, The James Hutton Institute
 (formerly SCRI, Scottish Crop Research Institute), UK. All rights reserved.
 See the licence text below (MIT licence).
 
-It is a collection of Galaxy wrappers for the MIRA 4.9 assembly tools.
+This is a Galaxy wrapper for ``mirabait`` from the MIRA 4.9 assembly suite.
 
 It is available from the Galaxy Tool Shed at:
-http://toolshed.g2.bx.psu.edu/view/peterjc/mira4_9
+http://toolshed.g2.bx.psu.edu/view/peterjc/mira4_9_mirabait
 
 Development/test previews are available from the Galaxy Test Tool Shed at:
-http://testtoolshed.g2.bx.psu.edu/view/peterjc/mira4_9
+http://testtoolshed.g2.bx.psu.edu/view/peterjc/mira4_9_mirabait
 
-It uses a Galaxy datatype definition 'mira' for the MIRA Assembly Format,
-http://toolshed.g2.bx.psu.edu/view/peterjc/mira_datatypes
+It is part of a suite for all the MIRA 4.9 tools:
+TODO...
 
 A separate wrapper for MIRA v4.0 is available from the Galaxy Tool Shed at:
 http://toolshed.g2.bx.psu.edu/view/peterjc/mira4_assembler
-
-A separate wrapper for MIRA v3.4 is available from the Galaxy Tool Shed at:
-http://toolshed.g2.bx.psu.edu/view/peterjc/mira_assembler
 
 
 Automated Installation
 ======================
 
-This should be straightforward...
+This should be straightforward. Via the Tool Shed, Galaxy should automatically
+install the precompiled binaries for MIRA v4.9.5, and offer to run any tests.
 
 
 Manual Installation
 ===================
 
-First install the ``mira`` datatype for Galaxy, available here:
+There are various Python and XML files to install into Galaxy:
 
-* http://toolshed.g2.bx.psu.edu/view/peterjc/mira_datatypes 
+* ``mira4_9_mirabait.xml`` (the Galaxy tool definition for mirabait)
+* ``mira_check_version.py`` (Python helper script)
 
-Then install all the individual tool wrappers, see their README files but the
-suggested location is a new ``tools/mira4_9`` folder. You will also need to
-modify the ``tools_conf.xml`` file to tell Galaxy to offer the tools::
+The suggested location is a new ``tools/mira4_9`` folder. You will
+also need to modify the ``tools_conf.xml`` file to tell Galaxy to offer the
+tool::
 
-  <tool file="mira4_9/mira4_9_mirabait.xml" />
+  <tool file="mira4_9/mirabait/mira4_9_mirabait.xml" />
   ...
 
 You will also need to install MIRA 4.9, we used version 4.9.5, and define the
@@ -54,12 +53,12 @@ You may wish to use different cluster setups for the de novo and mapping
 tools, see above.
 
 You will also need to install samtools (for generating a BAM file from MIRA's
-SAM output), if you haven't already for Galaxy's use.
+SAM output).
 
 If you wish to run the unit tests, also move/copy the ``test-data/`` files
 under Galaxy's ``test-data/`` folder. Then::
 
-    $ ./run_tests.sh -id mira_4_9_bait
+    $ ./run_tests.sh -id mira4_9_mirabait
     ...
 
 
