@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
-<repositories description="This requires the MIRA datatype definitions (e.g. the MIRA Assembly Format).">
+<repositories description="This suite bundles the MIRA 4.9 tools and the MIRA datatype definitions (e.g. the MIRA Assembly Format).">
     <repository name="mira_datatypes" owner="peterjc" />
+    <repository name="mira4_9_mirabait" owner="peterjc" />
 </repositories>
