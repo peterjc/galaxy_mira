@@ -10,6 +10,6 @@
     <tool file="mira4_0/mira4_mapping.xml" />
     <tool file="mira4_0/mira4_convert.xml" />
     <tool file="mira4_0/mira4_bait.xml" />
-    <tool file="mira4_9/mira_bait_4_9.xml" />
+    <tool file="mira4_9/mira_4_9_bait.xml" />
   </section>
 </toolbox>
