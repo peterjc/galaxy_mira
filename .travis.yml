@@ -52,8 +52,11 @@ env:
 # for testing our tools. Otherwise we use the default settings such as
 # running with an SQLite database.
 #
-# We also need to install our tool dependencies, e.g. NCBI BLAST+ binaries,
-# which we will do manually rather than via a (local) Galaxy Tool Shed.
+# We also need to install our tool dependencies, e.g. MIRA binaries
+# which we will do via "planemo dependency_script" rather than via a
+# (local) Galaxy Tool Shed. Note we need to install the different
+# versions of MIRA into separate directories as the binary filenames
+# clash otherwise.
 #
 
 before_install:
@@ -62,22 +65,25 @@ before_install:
  - planemo shed_lint --report_level warn --tools --fail_level error --recursive ${TRAVIS_BUILD_DIR}
  - echo "Fixing permissions on Python eggs cache folder"
  - mkdir -p "$HOME/.python-eggs"
- - chmod 700 "$HOME/.python-eggs" 
+ - chmod 700 "$HOME/.python-eggs"
+ - export DOWNLOAD_CACHE=/tmp/download_cache && mkdir $DOWNLOAD_CACHE
  - echo "Downloading and setting up MIRA 3.4..."
- - cd ${TRAVIS_BUILD_DIR}
- - wget http://downloads.sourceforge.net/project/mira-assembler/MIRA/Older%20releases/V3.4.0/mira_3.4.1.1_prod_linux-gnu_x86_64_static.tar.bz2
- - tar -jxvf mira_3.4.1.1_prod_linux-gnu_x86_64_static.tar.bz2
- - export PATH=$PWD/mira_3.4.1.1_prod_linux-gnu_x86_64_static/bin/:$PATH
+ - export INSTALL_DIR=/tmp/dep_install_mira_3_4 && mkdir $INSTALL_DIR
+ - planemo dependency_script ${TRAVIS_BUILD_DIR}/packages/package_mira_3_4_1_1
+ - bash dep_install.sh
+ - source env.sh
  - echo "Downloading and setting up MIRA 4.0..."
- - cd ${TRAVIS_BUILD_DIR}
- - wget http://downloads.sourceforge.net/project/mira-assembler/MIRA/stable/mira_4.0.2_linux-gnu_x86_64_static.tar.bz2
- - tar -jxvf mira_4.0.2_linux-gnu_x86_64_static.tar.bz2
- - export MIRA4=$PWD/mira_4.0.2_linux-gnu_x86_64_static/bin/
+ - export INSTALL_DIR=/tmp/dep_install_mira_4_0 && mkdir $INSTALL_DIR
+ - planemo dependency_script ${TRAVIS_BUILD_DIR}/packages/package_mira_4_0_2
+ - bash dep_install.sh
+ - source env.sh
  - echo "Downloading and setting up MIRA 4.9..."
- - wget http://downloads.sourceforge.net/project/mira-assembler/MIRA/development/mira_4.9.5_2_linux-gnu_x86_64_static.tar.bz2
- - tar -jxvf mira_4.9.5_2_linux-gnu_x86_64_static.tar.bz2
- - export MIRA4_9=$PWD/mira_4.9.5_2_linux-gnu_x86_64_static/bin/
+ - export INSTALL_DIR=/tmp/dep_install_mira_4_9 && mkdir $INSTALL_DIR
+ - planemo dependency_script ${TRAVIS_BUILD_DIR}/packages/package_mira_4_9_5
+ - bash dep_install.sh
+ - source env.sh
  - echo "Installing samtools..."
+ - cd ${TRAVIS_BUILD_DIR}
  - wget http://downloads.sourceforge.net/project/samtools/samtools/0.1.19/samtools-0.1.19.tar.bz2
  - tar -jxvf samtools-0.1.19.tar.bz2
  - cd samtools-0.1.19
