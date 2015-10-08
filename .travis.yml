@@ -67,11 +67,6 @@ before_install:
  - mkdir -p "$HOME/.python-eggs"
  - chmod 700 "$HOME/.python-eggs"
  - export DOWNLOAD_CACHE=/tmp/download_cache && mkdir $DOWNLOAD_CACHE
- - echo "Downloading and setting up MIRA 3.4..."
- - export INSTALL_DIR=/tmp/dep_install_mira_3_4 && mkdir $INSTALL_DIR
- - planemo dependency_script ${TRAVIS_BUILD_DIR}/packages/package_mira_3_4_1_1
- - bash dep_install.sh
- - source env.sh
  - echo "Downloading and setting up MIRA 4.0..."
  - export INSTALL_DIR=/tmp/dep_install_mira_4_0 && mkdir $INSTALL_DIR
  - planemo dependency_script ${TRAVIS_BUILD_DIR}/packages/package_mira_4_0_2
@@ -80,6 +75,11 @@ before_install:
  - echo "Downloading and setting up MIRA 4.9..."
  - export INSTALL_DIR=/tmp/dep_install_mira_4_9 && mkdir $INSTALL_DIR
  - planemo dependency_script ${TRAVIS_BUILD_DIR}/packages/package_mira_4_9_5
+ - bash dep_install.sh
+ - source env.sh
+ - echo "Downloading and setting up MIRA 3.4..."
+ - export INSTALL_DIR=/tmp/dep_install_mira_3_4 && mkdir $INSTALL_DIR
+ - planemo dependency_script ${TRAVIS_BUILD_DIR}/packages/package_mira_3_4_1_1
  - bash dep_install.sh
  - source env.sh
  - echo "Installing samtools..."
