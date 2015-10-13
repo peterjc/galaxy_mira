@@ -18,6 +18,7 @@ include:
   - ../../../tools/mira4_9/mirabait/mira4_9_mirabait.xml
   - ../../../tools/mira4_9/mirabait/repository_dependencies.xml
   - ../../../tools/mira4_9/mirabait/tool_dependencies.xml
+  - ../../../tools/mira4_9/mirabait/mira_check_version.py
   - ../../../test-data/tvc_bait.fasta
   - ../../../test-data/tvc_mini.fastq
   - ../../../test-data/tvc_mini_bait_pos.fastq
