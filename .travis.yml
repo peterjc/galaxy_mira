@@ -86,7 +86,7 @@ before_install:
  - bash dep_install.sh
  - source env.sh
  - echo "Installing samtools..."
- - cd ${TRAVIS_BUILD_DIR} & mkdir samtools & cd samtools
+ - cd ${TRAVIS_BUILD_DIR} && mkdir samtools && cd samtools
  - wget http://depot.galaxyproject.org/package/linux/x86_64/samtools/samtools-0.1.19-Linux-x86_64.tgz
  - tar -zxvf samtools-0.1.19-Linux-x86_64.tgz
  - export PATH=$PWD/bin/:$PATH
