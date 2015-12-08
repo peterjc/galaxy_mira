@@ -49,13 +49,10 @@ where it will capture and record the version used - and give a clear error
 message if there is a version mismatch (otherwise due to API changes the
 MIRA error messages tend to be very long and somewhare confusing).
 """
-import os
 import sys
 import subprocess
-import shutil
-import time
 
-WRAPPER_VER = "0.0.1" #Keep in sync with the XML file
+WRAPPER_VER = "0.0.2" #Keep in sync with the XML file
 
 def sys_exit(msg, err=1):
     sys.stderr.write(msg+"\n")
