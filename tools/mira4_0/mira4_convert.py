@@ -7,8 +7,6 @@ import os
 import sys
 import subprocess
 import shutil
-import time
-import tempfile
 from optparse import OptionParser
 try:
     from io import BytesIO
@@ -135,7 +133,7 @@ if not (out_maf or out_bam or out_fasta or out_ace or out_cstats):
 def check_min_int(value, name):
     try:
         i = int(value)
-    except:
+    except ValueError:
         sys_exit("Bad %s setting, %r" % (name, value))
     if i < 0:
         sys_exit("Negative %s setting, %r" % (name, value))
