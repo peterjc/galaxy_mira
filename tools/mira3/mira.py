@@ -9,10 +9,6 @@ import time
 
 WRAPPER_VER = "0.0.5" #Keep in sync with the XML file
 
-def sys_exit(msg, err=1):
-    sys.stderr.write(msg+"\n")
-    sys.exit(err)
-
 
 def get_version():
     """Run MIRA to find its version number"""
@@ -33,7 +29,7 @@ def get_version():
 
 mira_ver = get_version()
 if "V3.4." not in mira_ver:
-    sys_exit("This wrapper is for MIRA V3.4, not %s" % mira_ver)
+    sys.exit("This wrapper is for MIRA V3.4, not %s" % mira_ver)
 if "-v" in sys.argv:
     print "MIRA wrapper version %s," % WRAPPER_VER
     print mira_ver
@@ -44,9 +40,9 @@ def collect_output(temp, name):
     n3 = (temp, name, name, name)
     f = "%s/%s_assembly/%s_d_results" % (temp, name, name)
     if not os.path.isdir(f):
-        sys_exit("Missing output folder")
+        sys.exit("Missing output folder")
     if not os.listdir(f):
-        sys_exit("Empty output folder")
+        sys.exit("Empty output folder")
     missing = []
     for old, new in [("%s/%s_out.unpadded.fasta" % (f, name), out_fasta),
                      ("%s/%s_out.unpadded.fasta.qual" % (f, name), out_qual),
@@ -58,7 +54,7 @@ def collect_output(temp, name):
         else:
             shutil.move(old, new)
     if missing:
-        sys_exit("Missing output files: %s" % ", ".join(missing))
+        sys.exit("Missing output files: %s" % ", ".join(missing))
 
 def clean_up(temp, name):
     folder = "%s/%s_assembly" % (temp, name)
@@ -112,8 +108,9 @@ if return_code:
     handle.write(cmd + "\n")
     handle.close()
     clean_up(temp, name)
-    sys_exit("Return error code %i from command:\n%s" % (return_code, cmd),
-             return_code)
+    sys.stderr.write("Return error code %i from command:\n" % return_code)
+    sys.stderr.write(cmd + "\n")
+    sys.exit(return_code)
 handle.close()
 
 #print "Collecting output..."

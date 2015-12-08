@@ -54,10 +54,6 @@ import subprocess
 
 WRAPPER_VER = "0.0.2" #Keep in sync with the XML file
 
-def sys_exit(msg, err=1):
-    sys.stderr.write(msg+"\n")
-    sys.exit(err)
-
 
 def get_version(mira_binary):
     """Run MIRA to find its version number"""
@@ -79,7 +75,7 @@ def get_version(mira_binary):
             if " version " in line:
                 line = line.split()
                 return line[line.index("version")+1].rstrip(")")
-        sys_exit("Could not determine MIRA version:\n%s" % ver)
+        sys.exit("Could not determine MIRA version:\n%s" % ver)
     return ver.split("\n", 1)[0]
 
 
@@ -94,9 +90,9 @@ elif len(sys.argv) == 3:
     mira_binary = sys.argv[1]
     expected = sys.argv[2]
 else:
-    sys_exit("Usage: mira_check_version.py mira_binary [expected version]")
+    sys.exit("Usage: mira_check_version.py mira_binary [expected version]")
 
 mira_ver = get_version(mira_binary)
 if expected and not mira_ver.strip().startswith(expected):
-    sys_exit("Expected MIRA v%s, but %s reports: %s" % (expected, mira_binary, mira_ver))
+    sys.exit("Expected MIRA v%s, but %s reports: %s" % (expected, mira_binary, mira_ver))
 print(mira_ver)

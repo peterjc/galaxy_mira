@@ -19,9 +19,6 @@ from mira4_make_bam import depad
 
 WRAPPER_VER = "0.0.7"  # Keep in sync with the XML file
 
-def sys_exit(msg, err=1):
-    sys.stderr.write(msg+"\n")
-    sys.exit(err)
 
 def run(cmd):
     #Avoid using shell=True when we call subprocess to ensure if the Python
@@ -29,16 +26,16 @@ def run(cmd):
     try:
         child = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     except Exception, err:
-        sys_exit("Error invoking command:\n%s\n\n%s\n" % (" ".join(cmd), err))
+        sys.exit("Error invoking command:\n%s\n\n%s\n" % (" ".join(cmd), err))
     #Use .communicate as can get deadlocks with .wait(),
     stdout, stderr = child.communicate()
     return_code = child.returncode
     if return_code:
         cmd_str = " ".join(cmd)  # doesn't quote spaces etc
         if stderr and stdout:
-            sys_exit("Return code %i from command:\n%s\n\n%s\n\n%s" % (return_code, cmd_str, stdout, stderr))
+            sys.exit("Return code %i from command:\n%s\n\n%s\n\n%s" % (return_code, cmd_str, stdout, stderr))
         else:
-            sys_exit("Return code %i from command:\n%s\n%s" % (return_code, cmd_str, stderr))
+            sys.exit("Return code %i from command:\n%s\n%s" % (return_code, cmd_str, stderr))
 
 def get_version(mira_binary):
     """Run MIRA to find its version number"""
@@ -96,7 +93,7 @@ parser.add_option("-v", "--version", dest="version",
                   help="Show version and quit")
 options, args = parser.parse_args()
 if args:
-    sys_exit("Expected options (e.g. --input example.maf), not arguments")
+    sys.exit("Expected options (e.g. --input example.maf), not arguments")
 
 input_maf = options.input
 out_maf = options.maf
@@ -108,35 +105,35 @@ out_cstats = options.cstats
 try:
     mira_path = os.environ["MIRA4"]
 except KeyError:
-    sys_exit("Environment variable $MIRA4 not set")
+    sys.exit("Environment variable $MIRA4 not set")
 mira_convert = os.path.join(mira_path, "miraconvert")
 if not os.path.isfile(mira_convert):
-    sys_exit("Missing miraconvert under $MIRA4, %r\nFolder contained: %s"
+    sys.exit("Missing miraconvert under $MIRA4, %r\nFolder contained: %s"
              % (mira_convert, ", ".join(os.listdir(mira_path))))
 
 mira_convert_ver = get_version(mira_convert)
 if not mira_convert_ver.strip().startswith("4.0"):
-    sys_exit("This wrapper is for MIRA V4.0, not:\n%s\n%s" % (mira_convert_ver, mira_convert))
+    sys.exit("This wrapper is for MIRA V4.0, not:\n%s\n%s" % (mira_convert_ver, mira_convert))
 if options.version:
     print("%s, MIRA wrapper version %s" % (mira_convert_ver, WRAPPER_VER))
     sys.exit(0)
 
 if not input_maf:
-    sys_exit("Input MIRA file is required")
+    sys.exit("Input MIRA file is required")
 elif not os.path.isfile(input_maf):
-    sys_exit("Missing input MIRA file: %r" % input_maf)
+    sys.exit("Missing input MIRA file: %r" % input_maf)
 
 if not (out_maf or out_bam or out_fasta or out_ace or out_cstats):
-    sys_exit("No output requested")
+    sys.exit("No output requested")
 
 
 def check_min_int(value, name):
     try:
         i = int(value)
     except ValueError:
-        sys_exit("Bad %s setting, %r" % (name, value))
+        sys.exit("Bad %s setting, %r" % (name, value))
     if i < 0:
-        sys_exit("Negative %s setting, %r" % (name, value))
+        sys.exit("Negative %s setting, %r" % (name, value))
     return i
 
 min_length = check_min_int(options.min_length, "minimum length")
@@ -174,7 +171,7 @@ run(cmd_list)
 
 def collect(old, new):
     if not os.path.isfile(old):
-        sys_exit("Missing expected output file %s" % old)
+        sys.exit("Missing expected output file %s" % old)
     shutil.move(old, new)
 
 if out_maf:
@@ -188,12 +185,12 @@ if out_fasta:
         #Might the output be filtered down to zero contigs?
         old = os.path.join(temp, "converted.fasta")
         if not os.path.isfile(old):
-            sys_exit("Missing expected output FASTA file")
+            sys.exit("Missing expected output FASTA file")
         elif os.path.getsize(old) == 0:
             print("Warning - no contigs (harsh filters?)")
             collect(old, out_fasta)
         else:
-            sys_exit("Missing expected output FASTA file (only generic file present)")
+            sys.exit("Missing expected output FASTA file (only generic file present)")
 if out_ace:
     collect(os.path.join(temp, "converted.maf"), out_ace)
 if out_cstats:
@@ -205,7 +202,7 @@ if out_bam:
     if not os.path.isfile(old):
         old = os.path.join(temp, "converted.sam")
     if not os.path.isfile(old):
-        sys_exit("Missing expected intermediate file %s" % old)
+        sys.exit("Missing expected intermediate file %s" % old)
     h = BytesIO()
     msg = depad(out_fasta, old, out_bam, h)
     if msg:

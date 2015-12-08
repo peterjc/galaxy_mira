@@ -9,10 +9,6 @@ import time
 
 WRAPPER_VER = "0.0.5" #Keep in sync with the XML file
 
-def sys_exit(msg, err=1):
-    sys.stderr.write(msg+"\n")
-    sys.exit(err)
-
 
 def get_version(mira_binary):
     """Run MIRA to find its version number"""
@@ -34,20 +30,20 @@ def get_version(mira_binary):
             if " version " in line:
                 line = line.split()
                 return line[line.index("version")+1].rstrip(")")
-        sys_exit("Could not determine MIRA version:\n%s" % ver)
+        sys.exit("Could not determine MIRA version:\n%s" % ver)
     return ver.split("\n", 1)[0]
 
 try:
     mira_path = os.environ["MIRA4"]
 except KeyError:
-    sys_exit("Environment variable $MIRA4 not set")
+    sys.exit("Environment variable $MIRA4 not set")
 mira_binary = os.path.join(mira_path, "mirabait")
 if not os.path.isfile(mira_binary):
-    sys_exit("Missing mirabait under $MIRA4, %r\nFolder contained: %s"
+    sys.exit("Missing mirabait under $MIRA4, %r\nFolder contained: %s"
              % (mira_binary, ", ".join(os.listdir(mira_path))))
 mira_ver = get_version(mira_binary)
 if not mira_ver.strip().startswith("4.0"):
-    sys_exit("This wrapper is for MIRA V4.0, not:\n%s" % mira_ver)
+    sys.exit("This wrapper is for MIRA V4.0, not:\n%s" % mira_ver)
 if "-v" in sys.argv or "--version" in sys.argv:
     print "%s, MIRA wrapper version %s" % (mira_ver, WRAPPER_VER)
     sys.exit(0)
@@ -60,7 +56,7 @@ if format.startswith("fastq"):
 elif format == "mira":
     format = "maf"
 elif format != "fasta":
-    sys_exit("Was not expected format %r" % format)
+    sys.exit("Was not expected format %r" % format)
 
 assert out_file.endswith(".dat")
 out_file_stem = out_file[:-4]
@@ -74,14 +70,14 @@ elif output_choice == "neg":
     #Invert the selection...
     cmd_list.insert(1, "-i")
 else:
-    sys_exit("Output choice should be 'pos' or 'neg', not %r" % output_choice)
+    sys.exit("Output choice should be 'pos' or 'neg', not %r" % output_choice)
 if strand_choice == "both":
     pass
 elif strand_choice == "fwd":
     #Ingore reverse strand...
     cmd_list.insert(1, "-r")
 else:
-    sys_exit("Strand choice should be 'both' or 'fwd', not %r" % strand_choice)
+    sys.exit("Strand choice should be 'both' or 'fwd', not %r" % strand_choice)
 
 cmd = " ".join(cmd_list)
 #print cmd
@@ -103,12 +99,12 @@ print "mirabait took %0.2f minutes" % (run_time / 60.0)
 
 if return_code:
     sys.stderr.write(stdout)
-    sys_exit("Return error code %i from command:\n%s" % (return_code, cmd),
+    sys.exit("Return error code %i from command:\n%s" % (return_code, cmd),
              return_code)
 
 #Capture output
 out_tmp = out_file_stem + "." + format
 if not os.path.isfile(out_tmp):
     sys.stderr.write(stdout)
-    sys_exit("Missing output file from mirabait: %s" % out_tmp)
+    sys.exit("Missing output file from mirabait: %s" % out_tmp)
 shutil.move(out_tmp, out_file)
