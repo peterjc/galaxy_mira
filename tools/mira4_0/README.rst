@@ -1,7 +1,7 @@
 Galaxy wrapper for the MIRA assembly program (v4.0)
 ===================================================
 
-This tool is copyright 2011-2015 by Peter Cock, The James Hutton Institute
+This tool is copyright 2011-2016 by Peter Cock, The James Hutton Institute
 (formerly SCRI, Scottish Crop Research Institute), UK. All rights reserved.
 See the licence text below (MIT licence).
 
@@ -106,7 +106,8 @@ v0.0.7  - Renamed folder (internal change only).
         - MIRA 4.0.2 dependency now declared via dedicated Tool Shed package.
 v0.0.8  - Renamed folder now have a MIRA 4.9.x wrapper (internal change only).
 v0.0.9  - Additional unit tests now covering ``miraconvert``.
-        - Was missing ``mirabait`` wrapper since move to using Planemo.
+        - Re-include missing ``mirabait`` wrapper (accidentally left out when
+          changed to using Planemo for uploading to the Tool Shed).
 ======= ======================================================================
 
 
