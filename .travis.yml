@@ -1,26 +1,26 @@
 # This is a special configuration file to run tests on Travis-CI via
 # GitHub notifications when changes are committed.
 #
-# See http://travis-ci.org/ for details
-
-
-# We don't need sudo so can avoid the slower legacy container-based
-# TravisCI infrastructure:
-sudo: false
-
+# This file is not intended for end users of the Galaxy BLAST+ tools.
+#
+# For technical details, see http://travis-ci.org/ and this blog post
+# for background,
+# http://blastedbio.blogspot.com/2013/09/using-travis-ci-for-testing-galaxy-tools.html
 
 # Galaxy v16.01 (currently represented by their master branch)
 # supports Python 2.6 and 2.7, but there after only Python 2.7
+# Meanwhile, planemo only supports Python 2.7 and 3.4+
+# so we're only testing under Python 2.7 for now.
 language: python
 matrix:
   include:
-    - python: "2.6"
-      env: GALAXY_BRANCH=master
     - python: "2.7"
       env: GALAXY_BRANCH=master
     - python: "2.7"
       env: GALAXY_BRANCH=dev
 
+# We don't need sudo so can avoid slower legacy TravisCI infrastructure
+sudo: false
 
 # Planemo Lint
 # ============
@@ -136,23 +136,12 @@ install:
 # =======================
 #
 # Having setup our Galaxy with a minimal tool_conf.xml / tool_conf.xml.sample
-# we call run_functional_tests.sh to run just our tests (grouped under a
-# common section "travis" in the XML file for this purpose).
-#
-# ./run_functional_tests.sh -sid Continuous-Integration-Travis
-#
-# calls:
-#
-# python ./scripts/functional_tests.py --with-nosehtml --html-report-file run_functional_tests.html -v `python tool_list.py Continuous-Integration-Travis`
-#
-# That gives an error sadly under Travis,
-# functional_tests.py: error: no such option: --with-nosehtml
-# And also,
-# functional_tests.py: error: no such option: --html-report-file
-# Perhaps Galaxy's nose egg isn't being fetched?
+# originally called run_functional_tests.sh to run just our tests - but now
+# just using planemo.
 
 script:
- - python ./scripts/functional_tests.py -v `python tool_list.py Continuous-Integration-Travis`
+ - cd ${TRAVIS_BUILD_DIR}
+ - planemo test --galaxy_root ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH} --skip_venv tools/
 
 #The email defaults are too talkative while we're getting Travis working nicely.
 notifications:
