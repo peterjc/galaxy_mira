@@ -5,7 +5,7 @@
             <actions_group>
                 <!-- Download the binaries for MIRA compatible with 64-bit OSX. -->
                 <actions architecture="x86_64" os="darwin">
-                    <action type="download_by_url">http://downloads.sourceforge.net/project/mira-assembler/MIRA/development/mira_4.9.6_darwin14.3.0_x86_64_static.tar.bz2</action>
+                    <action type="download_by_url">http://downloads.sourceforge.net/project/mira-assembler/MIRA/development/mira_4.9.6_darwin15.4.0_x86_64_static.tar.bz2</action>
                     <action type="move_directory_files">
                          <source_directory>bin</source_directory>
                          <destination_directory>$INSTALL_DIR</destination_directory>
