@@ -34,13 +34,13 @@ The optional version checking is simple substring approach (beware of potential
 issues if MIRA versions ever use double digits for minor version), and returns
 zero if this matched::
 
-    $ python mira_check_version.py mirabait 4.9 && echo "Return value $?"
+    $ python mira_check_version.py mirabait 4.9 ; echo "Return value $?"
     4.9.5_2 
     Return value 0
 
 If the expected version did not match, the return value is one (error)::
 
-    $ python mira_check_version.py mirabait 4.9 && echo "Return value $?"
+    $ python mira_check_version.py mirabait 4.9 ; echo "Return value $?"
     Expected MIRA v4.9, but mirabait reports: V3.4.1.1
     Return value 1
 
