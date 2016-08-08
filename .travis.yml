@@ -78,7 +78,7 @@ before_install:
  - source env.sh
  - echo "Downloading and setting up MIRA 4.9..."
  - export INSTALL_DIR=/tmp/dep_install_mira_4_9 && mkdir $INSTALL_DIR
- - planemo dependency_script ${TRAVIS_BUILD_DIR}/packages/package_mira_4_9_6
+ - planemo dependency_script ${TRAVIS_BUILD_DIR}/packages/package_mira_4_9_5
  - bash dep_install.sh
  - source env.sh
  - echo "Downloading and setting up MIRA 3.4..."
