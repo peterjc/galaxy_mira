@@ -4,6 +4,7 @@
         <install version="1.0">
             <actions_group>
                 <!-- Download the binaries for MIRA compatible with 64-bit OSX. -->
+                <!-- Currently unavailable...
                 <actions architecture="x86_64" os="darwin">
                     <action type="download_by_url">http://downloads.sourceforge.net/project/mira-assembler/MIRA/development/mira_4.9.5_2_darwin14.3.0_x86_64_static.tar.bz2</action>
                     <action type="move_directory_files">
@@ -11,9 +12,10 @@
                          <destination_directory>$INSTALL_DIR</destination_directory>
                      </action>
                 </actions>
+                -->
                 <!-- Download the binaries for MIRA compatible with 64-bit Linux. -->
                 <actions architecture="x86_64" os="linux">
-                    <action type="download_by_url">http://downloads.sourceforge.net/project/mira-assembler/MIRA/development/mira_4.9.5_2_linux-gnu_x86_64_static.tar.bz2</action>
+                    <action type="download_by_url" sha256sum="3848885cb041cd9bf7aa8f220dd3f084443f5060fa433b669f7d28880ba4c61f">https://depot.galaxyproject.org/software/mira/mira_4.9.5_linux_x64.tar.bz2</action>
                     <action type="move_directory_files">
                         <source_directory>bin</source_directory>
                         <destination_directory>$INSTALL_DIR</destination_directory>
@@ -42,9 +44,10 @@
         </install>
         <readme>
 Downloads MIRA v4.9.5 from Sourceforge, requesting Bastien's precompiled binaries
-for 64 bit (x86_64) Linux or Mac OS X. Other platforms where compilation from
-source would be required (e.g. 32 bit Linux) are not supported by this automated
-installation script.
+for 64 bit (x86_64) Linux. Currently the Mac OS X binaries are not available.
+
+Other platforms where compilation from source would be required (e.g. 32 bit Linux)
+are not supported by this automated installation script.
 
 http://chevreux.org/projects_mira.html
 http://sourceforge.net/projects/mira-assembler/
