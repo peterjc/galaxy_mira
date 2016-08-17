@@ -5,7 +5,8 @@
             <actions_group>
                 <!-- Download the binaries for MIRA compatible with 64-bit OSX. -->
                 <actions architecture="x86_64" os="darwin">
-                    <action type="download_by_url">http://downloads.sourceforge.net/project/mira-assembler/MIRA/development/mira_4.9.6_darwin15.4.0_x86_64_static.tar.bz2</action>
+                    <!-- http://downloads.sourceforge.net/project/mira-assembler/MIRA/development/mira_4.9.6_darwin15.4.0_x86_64_static.tar.bz2 -->
+                    <action type="download_by_url" sha256sum="3d0bb15adad0e1e27899d21223cb552968d34d35ad9b1184e85832fc0b3d22ce">https://depot.galaxyproject.org/software/mira/mira_4.9.6_darwin_x64.tar.bz2</action>
                     <action type="move_directory_files">
                          <source_directory>bin</source_directory>
                          <destination_directory>$INSTALL_DIR</destination_directory>
@@ -13,7 +14,8 @@
                 </actions>
                 <!-- Download the binaries for MIRA compatible with 64-bit Linux. -->
                 <actions architecture="x86_64" os="linux">
-                    <action type="download_by_url">http://downloads.sourceforge.net/project/mira-assembler/MIRA/development/mira_4.9.6_linux-gnu_x86_64_static.tar.bz2</action>
+                    <!-- http://downloads.sourceforge.net/project/mira-assembler/MIRA/development/mira_4.9.6_linux-gnu_x86_64_static.tar.bz2 -->
+                    <action type="download_by_url" sha256sum="3d0bb15adad0e1e27899d21223cb552968d34d35ad9b1184e85832fc0b3d22ce">https://depot.galaxyproject.org/software/mira/mira_4.9.6_linux_x64.tar.bz2</action>
                     <action type="move_directory_files">
                         <source_directory>bin</source_directory>
                         <destination_directory>$INSTALL_DIR</destination_directory>

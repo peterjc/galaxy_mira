@@ -5,7 +5,8 @@
             <actions_group>
                 <!-- Download the binaries for MIRA compatible with 64-bit Linux. -->
                 <actions architecture="x86_64" os="linux">
-                    <action type="download_by_url">http://downloads.sourceforge.net/project/mira-assembler/MIRA/Older%20releases/V3.4.0/mira_3.4.1.1_prod_linux-gnu_x86_64_static.tar.bz2</action>
+                    <!-- http://downloads.sourceforge.net/project/mira-assembler/MIRA/Older%20releases/V3.4.0/mira_3.4.1.1_prod_linux-gnu_x86_64_static.tar.bz2 -->
+                    <action type="download_by_url" sha256sum="8843c3efc72f0ca8c7e681f9d81748604127b1d9c01d0234a5e8b3a55b798d5c">https://depot.galaxyproject.org/software/mira/mira_3.4.1.1_linux_x64.tar.bz2</action>
                     <action type="move_directory_files">
                         <source_directory>bin</source_directory>
                        <destination_directory>$INSTALL_DIR</destination_directory>

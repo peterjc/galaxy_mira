@@ -15,6 +15,7 @@
                 -->
                 <!-- Download the binaries for MIRA compatible with 64-bit Linux. -->
                 <actions architecture="x86_64" os="linux">
+                    <!-- http://downloads.sourceforge.net/project/mira-assembler/MIRA/development/mira_4.9.5_2_linux-gnu_x86_64_static.tar.bz2 -->
                     <action type="download_by_url" sha256sum="3848885cb041cd9bf7aa8f220dd3f084443f5060fa433b669f7d28880ba4c61f">https://depot.galaxyproject.org/software/mira/mira_4.9.5_linux_x64.tar.bz2</action>
                     <action type="move_directory_files">
                         <source_directory>bin</source_directory>
