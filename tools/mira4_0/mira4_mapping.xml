@@ -121,7 +121,7 @@ data = ${f.ext}::$f
         <!-- TODO? Allow strain settings for reference(s) and reads? -->
         <!-- TODO? Use a repeat to allow for multi-strain references? -->
         <!-- TODO? Add strain to the mapping read groups? -->
-        <param name="references" type="data" format="fasta,fastq,mira" multiple="true" label="Backbone reference file(s)"
+        <param name="references" type="data" format="fasta,fastq,mira" multiple="true" optional="false" label="Backbone reference file(s)"
                help="Multiple files allowed, for example one FASTA file per chromosome or plasmid." />
         <param name="strain_setup" type="select" label="Strain configuration (reference vs reads)">
             <option value="default">Different strains - mapping reads onto a related reference ('StrainX' vs 'ReferenceStrain')</option>
@@ -158,7 +158,7 @@ data = ${f.ext}::$f
                 </when>
                 <when value="none" /><!-- no further questions -->
             </conditional>
-            <param name="filenames" type="data" format="fastq,mira" multiple="true" label="Read file(s)"
+            <param name="filenames" type="data" format="fastq,mira" multiple="true" optional="false" label="Read file(s)"
                    help="Multiple files allowed, for example paired reads can be given as two files (MIRA looks at read names to identify pairs)." />
         </repeat>
         <param name="maf_wanted" type="boolean" label="Output mapping in MIRA's own format?" checked="False" />
