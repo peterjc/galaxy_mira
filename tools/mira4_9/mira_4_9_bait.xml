@@ -61,7 +61,7 @@
     <inputs>
         <!-- TODO: mirabait now allows multiple input files, and can do multiple outputs - or merge into one? -->
         <!-- TODO: define a new Galaxy datatype for the bait hash file? -->
-        <param name="bait_file" type="data" format="fasta,fastq,mira" required="true" label="Bait file (what to look for)" />
+        <param name="bait_file" type="data" format="fasta,fastq,mira" label="Bait file (what to look for)" />
         <conditional name="reads">
             <param name="type" type="select" label="Are these paired reads?">
                 <option value="paired">Paired reads (as two files)</option>
@@ -69,14 +69,14 @@
                 <option value="none">Unpaired reads (single or orphan reads as one file)</option>
             </param>
             <when value="paired">
-                <param name="filename" type="data" format="fastq,fasta" required="true" label="Read file one"/>
-                <param name="filename2" type="data" format="fastq,fasta" required="true" label="Read file two"/>
+                <param name="filename" type="data" format="fastq,fasta" label="Read file one"/>
+                <param name="filename2" type="data" format="fastq,fasta" label="Read file two"/>
             </when>
             <when value="interleaved">
-                <param name="filename" type="data" format="fasta,fastq" required="true" label="Interleaved paired reads to search" />
+                <param name="filename" type="data" format="fasta,fastq" label="Interleaved paired reads to search" />
             </when>
             <when value="none">
-                <param name="filename" type="data" format="fasta,fastq,mira" required="true" label="Reads to search" />
+                <param name="filename" type="data" format="fasta,fastq,mira" label="Reads to search" />
             </when>
         </conditional>
         <conditional name="output_choice_cond">

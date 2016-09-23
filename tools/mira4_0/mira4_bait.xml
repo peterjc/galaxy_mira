@@ -14,8 +14,8 @@
 mira4_bait.py $input_reads.ext $output_choice $strand_choice $kmer_length $min_occurence "$bait_file" "$input_reads" "$output_reads"
     </command>
     <inputs>
-        <param name="bait_file" type="data" format="fasta,fastq,mira" required="true" label="Bait file (what to look for)" />
-        <param name="input_reads" type="data" format="fasta,fastq,mira" required="true" label="Reads to search" />
+        <param name="bait_file" type="data" format="fasta,fastq,mira" label="Bait file (what to look for)" />
+        <param name="input_reads" type="data" format="fasta,fastq,mira" label="Reads to search" />
         <param name="output_choice" type="select" label="Output positive matches, or negative matches?">
             <option value="pos">Just positive matches</option>
             <option value="neg">Just negative matches</option>
