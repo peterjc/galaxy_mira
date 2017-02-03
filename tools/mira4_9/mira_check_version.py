@@ -52,7 +52,7 @@ MIRA error messages tend to be very long and somewhare confusing).
 import sys
 import subprocess
 
-WRAPPER_VER = "0.0.2" #Keep in sync with the XML file
+WRAPPER_VER = "0.0.2"  # Keep in sync with the XML file
 
 
 def get_version(mira_binary):
@@ -69,7 +69,7 @@ def get_version(mira_binary):
         sys.exit(1)
     ver, tmp = child.communicate()
     del child
-    #Workaround for -v not working in mirabait 4.0RC4
+    # Workaround for -v not working in mirabait 4.0RC4
     if "invalid option" in ver.split("\n", 1)[0]:
         for line in ver.split("\n", 1):
             if " version " in line:

@@ -9,10 +9,10 @@ import time
 import tempfile
 from optparse import OptionParser
 
-#Do we need any PYTHONPATH magic?
+# Do we need any PYTHONPATH magic?
 from mira4_make_bam import make_bam
 
-WRAPPER_VER = "0.0.4" #Keep in sync with the XML file
+WRAPPER_VER = "0.0.4"  # Keep in sync with the XML file
 
 
 def get_version(mira_binary):
@@ -31,7 +31,7 @@ def get_version(mira_binary):
     del child
     return ver.split("\n", 1)[0].strip()
 
-#Parse Command Line
+# Parse Command Line
 usage = """Galaxy MIRA4 wrapper script v%s - use as follows:
 
 $ python mira4.py ...
@@ -121,12 +121,12 @@ def override_temp(manifest):
     text = handle.read()
     handle.close()
 
-    #At time of writing, this is at the end of a file,
-    #but could be followed by a space in future...
+    # At time of writing, this is at the end of a file,
+    # but could be followed by a space in future...
     text = text.replace("-DI:trt=/tmp", "-DI:trt=" + tempfile.gettempdir())
 
-    #Want to try to ensure this gets written to disk before MIRA attempts
-    #to open it - any networked file system may impose a delay...
+    # Want to try to ensure this gets written to disk before MIRA attempts
+    # to open it - any networked file system may impose a delay...
     handle = open(manifest, "w")
     handle.write(text)
     handle.flush()
@@ -156,20 +156,19 @@ def collect_output(temp, name, handle):
 
     old_maf = "%s/%s_out.maf" % (f, name)
     if not os.path.isfile(old_maf):
-        #Triggered extractLargeContigs.sh?
+        # Triggered extractLargeContigs.sh?
         old_maf = "%s/%s_LargeContigs_out.maf" % (f, name)
 
-    #De novo or single strain mapping,
+    # De novo or single strain mapping,
     old_fasta = "%s/%s_out.unpadded.fasta" % (f, name)
     ref_fasta = "%s/%s_out.padded.fasta" % (f, name)
     if not os.path.isfile(old_fasta):
-        #Mapping (StrainX versus reference) or de novo
+        # Mapping (StrainX versus reference) or de novo
         old_fasta = "%s/%s_out_StrainX.unpadded.fasta" % (f, name)
         ref_fasta = "%s/%s_out_StrainX.padded.fasta" % (f, name)
     if not os.path.isfile(old_fasta):
         old_fasta = "%s/%s_out_ReferenceStrain.unpadded.fasta" % (f, name)
         ref_fasta = "%s/%s_out_ReferenceStrain.padded.fasta" % (f, name)
-        
 
     missing = False
     for old, new in [(old_maf, out_maf),
@@ -187,24 +186,25 @@ def collect_output(temp, name, handle):
         for filename in sorted(os.listdir(f)):
             sys.stderr.write("%s\n" % filename)
 
-    #For mapping mode, probably most people would expect a BAM file
-    #using the reference FASTA file...
+    # For mapping mode, probably most people would expect a BAM file
+    # using the reference FASTA file...
     if out_bam and out_bam != "-":
         if out_maf and out_maf != "-":
             msg = make_bam(mira_convert, out_maf, ref_fasta, out_bam, handle)
         else:
-            #Not collecting the MAF file, use original location        
+            # Not collecting the MAF file, use original location
             msg = make_bam(mira_convert, old_maf, ref_fasta, out_bam, handle)
         if msg:
             sys.exit(msg)
+
 
 def clean_up(temp, name):
     folder = "%s/%s_assembly" % (temp, name)
     if os.path.isdir(folder):
         shutil.rmtree(folder)
 
-#TODO - Run MIRA in /tmp or a configurable directory?
-#Currently Galaxy puts us somewhere safe like:
+# TODO - Run MIRA in /tmp or a configurable directory?
+# Currently Galaxy puts us somewhere safe like:
 #/opt/galaxy-dist/database/job_working_directory/846/
 temp = "."
 
@@ -218,19 +218,19 @@ cmd = " ".join(cmd_list)
 
 assert os.path.isdir(temp)
 d = "%s_assembly" % name
-#This can fail on my development machine if stale folders exist
-#under Galaxy's .../database/job_working_directory/ tree:
+# This can fail on my development machine if stale folders exist
+# under Galaxy's .../database/job_working_directory/ tree:
 assert not os.path.isdir(d), "Path %r already exists:\n%s" % (d, os.path.abspath(d))
 try:
-    #Check path access
+    # Check path access
     os.mkdir(d)
 except Exception, err:
     log_manifest(manifest)
     sys.stderr.write("Error making directory %s\n%s" % (d, err))
     sys.exit(1)
 
-#print os.path.abspath(".")
-#print cmd
+# print os.path.abspath(".")
+# print cmd
 
 if out_log and out_log != "-":
     handle = open(out_log, "w")
@@ -246,20 +246,20 @@ handle.write("\n")
 handle.write("============================ Starting MIRA now ===============================\n")
 handle.flush()
 try:
-    #Run MIRA
+    # Run MIRA
     child = subprocess.Popen(cmd_list,
                              stdout=handle,
                              stderr=subprocess.STDOUT)
 except Exception, err:
     log_manifest(manifest)
     sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (cmd, err))
-    #TODO - call clean up?
+    # TODO - call clean up?
     handle.write("Error invoking command:\n%s\n\n%s\n" % (cmd, err))
     handle.close()
     sys.exit(1)
-#Use .communicate as can get deadlocks with .wait(),
+# Use .communicate as can get deadlocks with .wait(),
 stdout, stderr = child.communicate()
-assert not stdout and not stderr #Should be empty as sent to handle
+assert not stdout and not stderr  # Should be empty as sent to handle
 run_time = time.time() - start_time
 return_code = child.returncode
 handle.write("\n")
@@ -287,7 +287,7 @@ if os.path.isfile("MIRA_assembly/MIRA_d_results/ec.log"):
     handle.write("============================ (end of ec.log) =================================\n")
     handle.flush()
 
-#print "Collecting output..."
+# print "Collecting output..."
 start_time = time.time()
 collect_output(temp, name, handle)
 collect_time = time.time() - start_time
@@ -295,13 +295,13 @@ handle.write("MIRA took %0.2f hours; collecting output %0.2f minutes\n" % (run_t
 print("MIRA took %0.2f hours; collecting output %0.2f minutes\n" % (run_time / 3600.0, collect_time / 60.0))
 
 if os.path.isfile("MIRA_assembly/MIRA_d_results/ec.log"):
-    #Treat as an error, but doing this AFTER collect_output
+    # Treat as an error, but doing this AFTER collect_output
     sys.stderr.write("Extract Large Contigs failed\n")
     handle.write("Extract Large Contigs failed\n")
     handle.close()
     sys.exit(1)
 
-#print "Cleaning up..."
+# print "Cleaning up..."
 clean_up(temp, name)
 
 handle.write("\nDone\n")

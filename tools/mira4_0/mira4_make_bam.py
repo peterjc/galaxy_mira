@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import tempfile
 
+
 def run(cmd, log_handle):
     try:
         child = subprocess.Popen(cmd, shell=True,
@@ -14,24 +15,25 @@ def run(cmd, log_handle):
                                  stderr=subprocess.STDOUT)
     except Exception, err:
         sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (cmd, err))
-        #TODO - call clean up?
+        # TODO - call clean up?
         log_handle.write("Error invoking command:\n%s\n\n%s\n" % (cmd, err))
         sys.exit(1)
-    #Use .communicate as can get deadlocks with .wait(),
+    # Use .communicate as can get deadlocks with .wait(),
     stdout, stderr = child.communicate()
-    assert not stderr #Should be empty as sent to stdout
+    assert not stderr  # Should be empty as sent to stdout
     if len(stdout) > 10000:
-        #miraconvert can be very verbose (is holding stdout in RAM a problem?)
+        # miraconvert can be very verbose (is holding stdout in RAM a problem?)
         stdout = stdout.split("\n")
         stdout = stdout[:10] + ["...", "<snip>", "..."] + stdout[-10:]
         stdout = "\n".join(stdout)
     log_handle.write(stdout)
     return child.returncode
 
+
 def depad(fasta_file, sam_file, bam_file, log_handle):
     log_handle.write("\n================= Converting MIRA assembly from SAM to BAM ===================\n")
-    #Also doing SAM to (uncompressed) BAM during depad
-    bam_stem = bam_file + ".tmp" # Have write permissions and want final file in this folder
+    # Also doing SAM to (uncompressed) BAM during depad
+    bam_stem = bam_file + ".tmp"  # Have write permissions and want final file in this folder
     cmd = 'samtools depad -S -u -T "%s" "%s" | samtools sort - "%s"' % (fasta_file, sam_file, bam_stem)
     return_code = run(cmd, log_handle)
     if return_code:
@@ -48,7 +50,7 @@ def depad(fasta_file, sam_file, bam_file, log_handle):
         return "samtools indexing of BAM file failed to produce BAI file"
 
     shutil.move(bam_stem + ".bam", bam_file)
-    os.remove(bam_stem + ".bam.bai") #Let Galaxy handle that...
+    os.remove(bam_stem + ".bam.bai")  # Let Galaxy handle that...
 
 
 def make_bam(mira_convert, maf_file, fasta_file, bam_file, log_handle):
@@ -71,7 +73,7 @@ def make_bam(mira_convert, maf_file, fasta_file, bam_file, log_handle):
     if not os.path.isfile(sam_file):
         return "Conversion from MIRA to SAM failed"
 
-    #Also doing SAM to (uncompressed) BAM during depad
+    # Also doing SAM to (uncompressed) BAM during depad
     msg = depad(fasta_file, sam_file, bam_file, log_handle)
     if msg:
         return msg
@@ -79,7 +81,7 @@ def make_bam(mira_convert, maf_file, fasta_file, bam_file, log_handle):
     os.remove(sam_file)
     os.rmdir(tmp_dir)
 
-    return None #Good :)
+    return None  # Good :)
 
 if __name__ == "__main__":
     mira_convert, maf_file, fasta_file, bam_file = sys.argv[1:]

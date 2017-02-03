@@ -7,7 +7,7 @@ import subprocess
 import shutil
 import time
 
-WRAPPER_VER = "0.0.5" #Keep in sync with the XML file
+WRAPPER_VER = "0.0.5"  # Keep in sync with the XML file
 
 
 def get_version(mira_binary):
@@ -24,7 +24,7 @@ def get_version(mira_binary):
         sys.exit(1)
     ver, tmp = child.communicate()
     del child
-    #Workaround for -v not working in mirabait 4.0RC4
+    # Workaround for -v not working in mirabait 4.0RC4
     if "invalid option" in ver.split("\n", 1)[0]:
         for line in ver.split("\n", 1):
             if " version " in line:
@@ -67,32 +67,32 @@ cmd_list = [mira_binary, "-f", format, "-t", format,
 if output_choice == "pos":
     pass
 elif output_choice == "neg":
-    #Invert the selection...
+    # Invert the selection...
     cmd_list.insert(1, "-i")
 else:
     sys.exit("Output choice should be 'pos' or 'neg', not %r" % output_choice)
 if strand_choice == "both":
     pass
 elif strand_choice == "fwd":
-    #Ingore reverse strand...
+    # Ingore reverse strand...
     cmd_list.insert(1, "-r")
 else:
     sys.exit("Strand choice should be 'both' or 'fwd', not %r" % strand_choice)
 
 cmd = " ".join(cmd_list)
-#print cmd
+# print cmd
 start_time = time.time()
 try:
-    #Run MIRA
+    # Run MIRA
     child = subprocess.Popen(cmd_list,
                              stdout=subprocess.PIPE,
                              stderr=subprocess.STDOUT)
 except Exception, err:
     sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (cmd, err))
     sys.exit(1)
-#Use .communicate as can get deadlocks with .wait(),
+# Use .communicate as can get deadlocks with .wait(),
 stdout, stderr = child.communicate()
-assert stderr is None # Due to way we ran with subprocess
+assert stderr is None  # Due to way we ran with subprocess
 run_time = time.time() - start_time
 return_code = child.returncode
 print "mirabait took %0.2f minutes" % (run_time / 60.0)
@@ -102,7 +102,7 @@ if return_code:
     sys.exit("Return error code %i from command:\n%s" % (return_code, cmd),
              return_code)
 
-#Capture output
+# Capture output
 out_tmp = out_file_stem + "." + format
 if not os.path.isfile(out_tmp):
     sys.stderr.write(stdout)

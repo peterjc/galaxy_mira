@@ -11,23 +11,23 @@ from optparse import OptionParser
 try:
     from io import BytesIO
 except ImportError:
-    #Should we worry about Python 2.5 or older?
+    # Should we worry about Python 2.5 or older?
     from StringIO import StringIO as BytesIO
 
-#Do we need any PYTHONPATH magic?
+# Do we need any PYTHONPATH magic?
 from mira4_make_bam import depad
 
 WRAPPER_VER = "0.0.7"  # Keep in sync with the XML file
 
 
 def run(cmd):
-    #Avoid using shell=True when we call subprocess to ensure if the Python
-    #script is killed, so too is the child process.
+    # Avoid using shell=True when we call subprocess to ensure if the Python
+    # script is killed, so too is the child process.
     try:
         child = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     except Exception, err:
         sys.exit("Error invoking command:\n%s\n\n%s\n" % (" ".join(cmd), err))
-    #Use .communicate as can get deadlocks with .wait(),
+    # Use .communicate as can get deadlocks with .wait(),
     stdout, stderr = child.communicate()
     return_code = child.returncode
     if return_code:
@@ -36,6 +36,7 @@ def run(cmd):
             sys.exit("Return code %i from command:\n%s\n\n%s\n\n%s" % (return_code, cmd_str, stdout, stderr))
         else:
             sys.exit("Return code %i from command:\n%s\n%s" % (return_code, cmd_str, stderr))
+
 
 def get_version(mira_binary):
     """Run MIRA to find its version number"""
@@ -53,7 +54,7 @@ def get_version(mira_binary):
     del child
     return ver.split("\n", 1)[0].strip()
 
-#Parse Command Line
+# Parse Command Line
 usage = """Galaxy MIRA4 wrapper script v%s - use as follows:
 
 $ python mira4_convert.py ...
@@ -140,8 +141,8 @@ min_length = check_min_int(options.min_length, "minimum length")
 min_cover = check_min_int(options.min_cover, "minimum cover")
 min_reads = check_min_int(options.min_reads, "minimum reads")
 
-#TODO - Run MIRA in /tmp or a configurable directory?
-#Currently Galaxy puts us somewhere safe like:
+# TODO - Run MIRA in /tmp or a configurable directory?
+# Currently Galaxy puts us somewhere safe like:
 #/opt/galaxy-dist/database/job_working_directory/846/
 temp = "."
 
@@ -159,7 +160,7 @@ if out_maf:
 if out_bam:
     cmd_list.append("samnbb")
     if not out_fasta:
-        #Need this for samtools depad
+        # Need this for samtools depad
         out_fasta = os.path.join(temp, "depadded.fasta")
 if out_fasta:
     cmd_list.append("fasta")
@@ -169,6 +170,7 @@ if out_cstats:
     cmd_list.append("cstats")
 run(cmd_list)
 
+
 def collect(old, new):
     if not os.path.isfile(old):
         sys.exit("Missing expected output file %s" % old)
@@ -177,12 +179,12 @@ def collect(old, new):
 if out_maf:
     collect(os.path.join(temp, "converted.maf"), out_maf)
 if out_fasta:
-    #Can we look at the MAF file to see if there are multiple strains?
+    # Can we look at the MAF file to see if there are multiple strains?
     old = os.path.join(temp, "converted_AllStrains.unpadded.fasta")
     if os.path.isfile(old):
         collect(old, out_fasta)
     else:
-        #Might the output be filtered down to zero contigs?
+        # Might the output be filtered down to zero contigs?
         old = os.path.join(temp, "converted.fasta")
         if not os.path.isfile(old):
             sys.exit("Missing expected output FASTA file")
@@ -212,7 +214,7 @@ if out_bam:
         sys.exit(1)
     h.close()
     if out_fasta == os.path.join(temp, "depadded.fasta"):
-        #Not asked for by Galaxy, no longer needed
+        # Not asked for by Galaxy, no longer needed
         os.remove(out_fasta)
 
 if min_length or min_cover or min_reads:
