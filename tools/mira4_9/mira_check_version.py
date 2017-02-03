@@ -15,27 +15,27 @@ Example output from MIRA V3.4 suite installed on the ``$PATH``::
 Example output from MIRA v4.0.2::
 
     $ python mira_check_version.py ~/downloads/mira_4.0.2_linux-gnu_x86_64_static/bin/mira
-    4.0.2 
+    4.0.2
     $ python mira_check_version.py ~/downloads/mira_4.0.2_linux-gnu_x86_64_static/bin/mirabait
-    4.0.2 
+    4.0.2
     $ python mira_check_version.py ~/downloads/mira_4.0.2_linux-gnu_x86_64_static/bin/miraconvert
-    4.0.2 
+    4.0.2
 
 Example output from MIRA v4.9.5::
 
     $ python mira_check_version.py ~/downloads/mira_4.9.5_2_linux-gnu_x86_64_static/bin/mira
-    4.9.5_2 
-    $ python mira_check_version.py ~/downloads/mira_4.9.5_2_linux-gnu_x86_64_static/bin/mirabait 
-    4.9.5_2 
+    4.9.5_2
+    $ python mira_check_version.py ~/downloads/mira_4.9.5_2_linux-gnu_x86_64_static/bin/mirabait
+    4.9.5_2
     $ python mira_check_version.py ~/downloads/mira_4.9.5_2_linux-gnu_x86_64_static/bin/miraconvert
-    4.9.5_2 
+    4.9.5_2
 
 The optional version checking is simple substring approach (beware of potential
 issues if MIRA versions ever use double digits for minor version), and returns
 zero if this matched::
 
     $ python mira_check_version.py mirabait 4.9 ; echo "Return value $?"
-    4.9.5_2 
+    4.9.5_2
     Return value 0
 
 If the expected version did not match, the return value is one (error)::
