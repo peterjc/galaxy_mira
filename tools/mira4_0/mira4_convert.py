@@ -143,7 +143,7 @@ min_reads = check_min_int(options.min_reads, "minimum reads")
 
 # TODO - Run MIRA in /tmp or a configurable directory?
 # Currently Galaxy puts us somewhere safe like:
-#/opt/galaxy-dist/database/job_working_directory/846/
+# /opt/galaxy-dist/database/job_working_directory/846/
 temp = "."
 
 

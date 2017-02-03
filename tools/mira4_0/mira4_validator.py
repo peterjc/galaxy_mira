@@ -1,5 +1,5 @@
 # Called from the Galaxy Tool XML file
-#import sys
+# import sys
 
 
 def validate_input(trans, error_map, param_values, page_param_map):
@@ -14,7 +14,7 @@ def validate_input(trans, error_map, param_values, page_param_map):
 
         min_size = str(segments["min_size"]).strip()
         max_size = str(segments["max_size"]).strip()
-        #sys.stderr.write("DEBUG min_size=%r, max_size=%r\n" % (min_size, max_size))
+        # sys.stderr.write("DEBUG min_size=%r, max_size=%r\n" % (min_size, max_size))
 
         # Somehow Galaxy seems to turn an empty field into string "None"...
         if min_size == "None":
