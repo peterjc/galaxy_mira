@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 """A simple wrapper script to call MIRA and collect its output.
 """
+
 import os
-import sys
-import subprocess
 import shutil
+import subprocess
+import sys
 import time
 
 WRAPPER_VER = "0.0.5"  # Keep in sync with the XML file

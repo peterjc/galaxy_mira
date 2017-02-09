@@ -3,11 +3,14 @@
 
 This focuses on the miraconvert binary.
 """
+
 import os
-import sys
-import subprocess
 import shutil
+import subprocess
+import sys
+
 from optparse import OptionParser
+
 try:
     from io import BytesIO
 except ImportError:

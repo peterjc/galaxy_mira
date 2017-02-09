@@ -49,8 +49,9 @@ where it will capture and record the version used - and give a clear error
 message if there is a version mismatch (otherwise due to API changes the
 MIRA error messages tend to be very long and somewhare confusing).
 """
-import sys
+
 import subprocess
+import sys
 
 WRAPPER_VER = "0.0.2"  # Keep in sync with the XML file
 

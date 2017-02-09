@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 """A simple wrapper script to call MIRA and collect its output.
 """
+
 import os
-import sys
-import subprocess
 import shutil
-import time
+import subprocess
+import sys
 import tempfile
+import time
+
 from optparse import OptionParser
 
 # Do we need any PYTHONPATH magic?
