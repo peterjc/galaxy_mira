@@ -62,6 +62,7 @@ def clean_up(temp, name):
     if os.path.isdir(folder):
         shutil.rmtree(folder)
 
+
 # TODO - Run MIRA in /tmp or a configurable directory?
 # Currently Galaxy puts us somewhere safe like:
 # /opt/galaxy-dist/database/job_working_directory/846/

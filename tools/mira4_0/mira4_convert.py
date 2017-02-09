@@ -54,6 +54,7 @@ def get_version(mira_binary):
     del child
     return ver.split("\n", 1)[0].strip()
 
+
 # Parse Command Line
 usage = """Galaxy MIRA4 wrapper script v%s - use as follows:
 
@@ -137,6 +138,7 @@ def check_min_int(value, name):
         sys.exit("Negative %s setting, %r" % (name, value))
     return i
 
+
 min_length = check_min_int(options.min_length, "minimum length")
 min_cover = check_min_int(options.min_cover, "minimum cover")
 min_reads = check_min_int(options.min_reads, "minimum reads")
@@ -175,6 +177,7 @@ def collect(old, new):
     if not os.path.isfile(old):
         sys.exit("Missing expected output file %s" % old)
     shutil.move(old, new)
+
 
 if out_maf:
     collect(os.path.join(temp, "converted.maf"), out_maf)

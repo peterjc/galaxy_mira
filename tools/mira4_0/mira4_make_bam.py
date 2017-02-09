@@ -83,6 +83,7 @@ def make_bam(mira_convert, maf_file, fasta_file, bam_file, log_handle):
 
     return None  # Good :)
 
+
 if __name__ == "__main__":
     mira_convert, maf_file, fasta_file, bam_file = sys.argv[1:]
     msg = make_bam(mira_convert, maf_file, fasta_file, bam_file, sys.stdout)

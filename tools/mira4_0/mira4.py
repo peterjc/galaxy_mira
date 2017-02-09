@@ -31,6 +31,7 @@ def get_version(mira_binary):
     del child
     return ver.split("\n", 1)[0].strip()
 
+
 # Parse Command Line
 usage = """Galaxy MIRA4 wrapper script v%s - use as follows:
 
@@ -202,6 +203,7 @@ def clean_up(temp, name):
     folder = "%s/%s_assembly" % (temp, name)
     if os.path.isdir(folder):
         shutil.rmtree(folder)
+
 
 # TODO - Run MIRA in /tmp or a configurable directory?
 # Currently Galaxy puts us somewhere safe like:

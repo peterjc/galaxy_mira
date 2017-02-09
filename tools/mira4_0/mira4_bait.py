@@ -33,6 +33,7 @@ def get_version(mira_binary):
         sys.exit("Could not determine MIRA version:\n%s" % ver)
     return ver.split("\n", 1)[0]
 
+
 try:
     mira_path = os.environ["MIRA4"]
 except KeyError:
