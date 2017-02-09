@@ -9,7 +9,7 @@ class MiraAssemblyFormat(Text):
     """MIRA Assembly Format  data"""
     file_ext = "mira"
 
-    def sniff( self, filename ):
+    def sniff(self, filename):
         """Determines whether the file is a MIRA Assembly Format file.
 
         Note currently this only detects MIRA Assembly Format v2.0,
@@ -28,19 +28,19 @@ class MiraAssemblyFormat(Text):
             h.close()
             return False
         return True
-    
+
     def merge(split_files, output_file):
         """Merging multiple MIRA files is non-trivial and may not be possible..."""
         if len(split_files) == 1:
-            #For one file only, use base class method (move/copy)
+            # For one file only, use base class method (move/copy)
             return Text.merge(split_files, output_file)
         if not split_files:
-            raise ValueError("Given no MIRA, %r, to merge into %s" \
+            raise ValueError("Given no MIRA, %r, to merge into %s"
                              % (split_files, output_file))
         raise NotImplementedError("Merging MIRA Assembly Files has not been implemented")
     merge = staticmethod(merge)
 
-    def split( cls, input_datasets, subdir_generator_function, split_params):
+    def split(cls, input_datasets, subdir_generator_function, split_params):
         """Split a MIRA Assembly File (not implemented for now)."""
         if split_params is None:
             return None
