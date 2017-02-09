@@ -276,7 +276,7 @@ if return_code:
     log_manifest(manifest)
     sys.stderr.write("Return error code %i from command:\n" % return_code)
     sys.stderr.write(cmd + "\n")
-    sys.exit(eturn_code)
+    sys.exit(return_code)
 handle.flush()
 
 if os.path.isfile("MIRA_assembly/MIRA_d_results/ec.log"):
