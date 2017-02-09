@@ -37,7 +37,6 @@ if "-v" in sys.argv:
 
 
 def collect_output(temp, name):
-    n3 = (temp, name, name, name)
     f = "%s/%s_assembly/%s_d_results" % (temp, name, name)
     if not os.path.isdir(f):
         sys.exit("Missing output folder")
