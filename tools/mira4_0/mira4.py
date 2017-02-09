@@ -295,8 +295,10 @@ if os.path.isfile("MIRA_assembly/MIRA_d_results/ec.log"):
 start_time = time.time()
 collect_output(temp, name, handle)
 collect_time = time.time() - start_time
-handle.write("MIRA took %0.2f hours; collecting output %0.2f minutes\n" % (run_time / 3600.0, collect_time / 60.0))
-print("MIRA took %0.2f hours; collecting output %0.2f minutes\n" % (run_time / 3600.0, collect_time / 60.0))
+handle.write("MIRA took %0.2f hours; collecting output %0.2f minutes\n"
+             % (run_time / 3600.0, collect_time / 60.0))
+print("MIRA took %0.2f hours; collecting output %0.2f minutes\n"
+      % (run_time / 3600.0, collect_time / 60.0))
 
 if os.path.isfile("MIRA_assembly/MIRA_d_results/ec.log"):
     # Treat as an error, but doing this AFTER collect_output
