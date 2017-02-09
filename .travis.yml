@@ -54,7 +54,7 @@ before_install:
  - planemo shed_lint --tools --fail_level error --ensure_metadata --urls -r ${TRAVIS_BUILD_DIR}
  - echo "Using pep8 to check Python code"
  - pip install pep8
- - pep8 --max-line-length 120 tools/*/*.py
+ - pep8 --max-line-length 120 .
  - echo "Fixing permissions on Python eggs cache folder"
  - mkdir -p "$HOME/.python-eggs"
  - chmod 700 "$HOME/.python-eggs"
