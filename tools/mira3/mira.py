@@ -2,13 +2,15 @@
 """A simple wrapper script to call MIRA and collect its output.
 """
 
+from __future__ import print_function
+
 import os
 import shutil
 import subprocess
 import sys
 import time
 
-WRAPPER_VER = "0.0.5"  # Keep in sync with the XML file
+WRAPPER_VER = "0.0.12"  # Keep in sync with the XML file
 
 
 def get_version():
@@ -20,7 +22,7 @@ def get_version():
         child = subprocess.Popen(cmd,
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.STDOUT)
-    except Exception, err:
+    except Exception as err:
         sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (" ".join(cmd), err))
         sys.exit(1)
     ver, tmp = child.communicate()
@@ -32,8 +34,8 @@ mira_ver = get_version()
 if "V3.4." not in mira_ver:
     sys.exit("This wrapper is for MIRA V3.4, not %s" % mira_ver)
 if "-v" in sys.argv:
-    print "MIRA wrapper version %s," % WRAPPER_VER
-    print mira_ver
+    print("MIRA wrapper version %s," % WRAPPER_VER)
+    print(mira_ver)
     sys.exit(0)
 
 
@@ -79,12 +81,12 @@ assert not os.path.isdir(d), "Path %s already exists" % d
 try:
     # Check path access
     os.mkdir(d)
-except Exception, err:
+except Exception as err:
     sys.stderr.write("Error making directory %s\n%s" % (d, err))
     sys.exit(1)
 
-# print os.path.abspath(".")
-# print cmd
+# print(os.path.abspath("."))
+# print(cmd)
 
 handle = open(out_log, "w")
 try:
@@ -92,7 +94,7 @@ try:
     child = subprocess.Popen(cmd_list,
                              stdout=handle,
                              stderr=subprocess.STDOUT)
-except Exception, err:
+except Exception as err:
     sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (cmd, err))
     # TODO - call clean up?
     handle.write("Error invoking command:\n%s\n\n%s\n" % (cmd, err))
@@ -104,7 +106,7 @@ assert not stdout and not stderr  # Should be empty as sent to handle
 run_time = time.time() - start_time
 return_code = child.returncode
 handle.write("\n\nMIRA took %0.2f minutes\n" % (run_time / 60.0))
-print "MIRA took %0.2f minutes" % (run_time / 60.0)
+print("MIRA took %0.2f minutes" % (run_time / 60.0))
 if return_code:
     handle.write("Return error code %i from command:\n" % return_code)
     handle.write(cmd + "\n")
@@ -121,4 +123,4 @@ collect_output(temp, name)
 # print "Cleaning up..."
 clean_up(temp, name)
 
-print "Done"
+print("Done")

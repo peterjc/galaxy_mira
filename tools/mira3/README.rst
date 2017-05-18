@@ -85,6 +85,7 @@ v0.0.10 - Added a functional test.
 v0.0.11 - Tool definition now embeds citation information.
         - Planemo for Tool Shed upload (``.shed.yml``, internal change only).
         - MIRA 3.4.1.1 dependency now declared via dedicated Tool Shed package.
+v0.0.12 - Python 3 compatible syntax (internal change only).
 ======= ======================================================================
 
 
