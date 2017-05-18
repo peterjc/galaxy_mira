@@ -5,22 +5,20 @@
         <requirement type="package" version="0.1.19">samtools</requirement>
     </requirements>
     <code file="mira4_validator.py" />
-    <stdio>
-        <!-- Assume anything other than zero is an error -->
-        <exit_code range="1:" />
-        <exit_code range=":-1" />
-    </stdio>
-    <version_command interpreter="python">mira4.py --version</version_command>
-    <command interpreter="python">mira4.py
---manifest "$manifest"
+    <version_command>
+python $__tool_directory__/mira4.py --version
+    </version_command>
+    <command detect_errors="aggressive">
+python $__tool_directory__/mira4.py
+--manifest '$manifest'
 #if str($maf_wanted)=="true":
---maf "$out_maf"
+--maf '$out_maf'
 #end if
 #if str($bam_wanted)=="true":
---bam "$out_bam"
+--bam '$out_bam'
 #end if
---fasta "$out_fasta"
---log "$out_log"
+--fasta '$out_fasta'
+--log '$out_log'
     </command>
     <configfiles>
         <configfile name="manifest">

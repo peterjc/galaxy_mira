@@ -3,16 +3,14 @@
     <requirements>
         <requirement type="package" version="4.9.5">MIRA</requirement>
     </requirements>
-    <stdio>
-        <!-- Assume anything other than zero is an error -->
-        <exit_code range="1:" />
-        <exit_code range=":-1" />
-    </stdio>
-    <version_command interpreter="python">mira_check_version.py ${MIRA4_9}mirabait</version_command>
-    <command interpreter="python">./mira_check_version.py \${MIRA4_9}mirabait 4.9 &amp;&amp;
+    <version_command>
+python $__tool_directory__/mira_check_version.py ${MIRA4_9}mirabait
+    </version_command>
+    <command detect_errors="aggressive" strict="true">
+python $__tool_directory__/mira_check_version.py \${MIRA4_9}mirabait 4.9 &amp;&amp;
 ##First checked it is mirabait v4.9 on the path... now actually run it
 ##-----------------------------------------------------------------------
-\${MIRA4_9}mirabait -k "$kmer_length" -n "$min_occurence" -b "$bait_file"
+\${MIRA4_9}mirabait -k '$kmer_length' -n '$min_occurence' -b '$bait_file'
 ##-----------------------------------------------------------------------
 ##Must now map Galaxy datatypes to MIRA file types...
 ##exploiting the polymorphic naming of the input read parameter!
@@ -24,15 +22,15 @@
  -f maf -t maf
 #else
 ##MIRA is happy with fasta as name,
- -f "$reads.filename.ext" -t "$reads.filename.ext"
+ -f '$reads.filename.ext' -t '$reads.filename.ext'
 #end if
 ##-----------------------------------------------------------------------
 #if str($output_choice_cond.output_choice)=="both"
--o "$output_pos" -O "$output_neg"
+-o '$output_pos' -O '$output_neg'
 #elif str($output_choice_cond.output_choice)=="pos"
--o "$output_pos"
+-o '$output_pos'
 #elif str($output_choice_cond.output_choice)=="neg"
--i -O "$output_neg"
+-i -O '$output_neg'
 #end if
 ##-----------------------------------------------------------------------
 ##Do we need to ignore the reverse strand?
@@ -50,11 +48,11 @@
 ##TODO: Is there a better way to signal an error to Galaxy here?
 ; echo "ERROR: Paired read datatype mis-match!" ; false
 #end if
--p "$reads.filename" "$reads.filename2"
+-p '$reads.filename' '$reads.filename2'
 #elif str($reads.type) == "interleaved"
--P "$reads.filename"
+-P '$reads.filename'
 #elif str($reads.type) == "none"
-"$reads.filename"
+'$reads.filename'
 #end if
     </command>
     <inputs>

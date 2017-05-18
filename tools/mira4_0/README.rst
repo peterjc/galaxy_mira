@@ -109,6 +109,8 @@ v0.0.9  - Additional unit tests now covering ``miraconvert``.
         - Re-include missing ``mirabait`` wrapper (accidentally left out when
           changed to using Planemo for uploading to the Tool Shed).
 v0.0.10 - Python 3 compatible syntax (internal change only).
+        - Use ``<command detect_errors="aggressive">`` (internal change only).
+        - Single quote command line arguments (internal change only).
 ======= ======================================================================
 
 

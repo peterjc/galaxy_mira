@@ -3,14 +3,11 @@
     <requirements>
         <requirement type="package" version="4.0.2">MIRA</requirement>
     </requirements>
-    <stdio>
-        <!-- Assume anything other than zero is an error -->
-        <exit_code range="1:" />
-        <exit_code range=":-1" />
-    </stdio>
-    <version_command interpreter="python">mira4_bait.py --version</version_command>
-    <command interpreter="python">
-mira4_bait.py $input_reads.ext $output_choice $strand_choice $kmer_length $min_occurence "$bait_file" "$input_reads" "$output_reads"
+    <version_command>
+python $__tool_directory__/mira4_bait.py --version
+    </version_command>
+    <command detect_errors="aggressive">
+python $__tool_directory__/mira4_bait.py $input_reads.ext $output_choice $strand_choice $kmer_length $min_occurence '$bait_file' '$input_reads' '$output_reads'
     </command>
     <inputs>
         <param name="bait_file" type="data" format="fasta,fastq,mira" label="Bait file (what to look for)" />
