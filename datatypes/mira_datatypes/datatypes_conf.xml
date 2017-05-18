@@ -7,6 +7,6 @@
         <datatype extension="mira" type="galaxy.datatypes.mira:MiraAssemblyFormat" mimetype="text/plain" display_in_upload="true"/>
     </registration>
     <sniffers>
-        <sniffer type="galaxy.datatypes.mira:MiraAssemblyFormat"/>	
+        <sniffer type="galaxy.datatypes.mira:MiraAssemblyFormat"/>
     </sniffers>
 </datatypes>
