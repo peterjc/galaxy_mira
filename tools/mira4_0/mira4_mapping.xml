@@ -1,10 +1,7 @@
 <tool id="mira_4_0_mapping" name="MIRA v4.0 mapping" version="0.0.10">
     <description>Maps Sanger, Roche 454, Solexa/Illumina, Ion Torrent and PacBio reads</description>
     <requirements>
-        <requirement type="binary">mira</requirement>
-        <requirement type="binary">miraconvert</requirement>
         <requirement type="package" version="4.0.2">MIRA</requirement>
-        <requirement type="binary">samtools</requirement>
         <requirement type="package" version="0.1.19">samtools</requirement>
     </requirements>
     <stdio>

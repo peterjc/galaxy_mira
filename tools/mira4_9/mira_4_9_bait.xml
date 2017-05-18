@@ -1,7 +1,6 @@
 <tool id="mira_4_9_bait" name="MIRA v4.9 mirabait" version="0.0.1">
     <description>Filter reads using kmer matches</description>
     <requirements>
-        <requirement type="binary">mirabait</requirement>
         <requirement type="package" version="4.9.5">MIRA</requirement>
     </requirements>
     <stdio>
