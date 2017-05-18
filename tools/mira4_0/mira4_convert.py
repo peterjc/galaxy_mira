@@ -4,6 +4,8 @@
 This focuses on the miraconvert binary.
 """
 
+from __future__ import print_function
+
 import os
 import shutil
 import subprocess
@@ -20,7 +22,7 @@ except ImportError:
 # Do we need any PYTHONPATH magic?
 from mira4_make_bam import depad
 
-WRAPPER_VER = "0.0.7"  # Keep in sync with the XML file
+WRAPPER_VER = "0.0.10"  # Keep in sync with the XML file
 
 
 def run(cmd):
@@ -28,7 +30,7 @@ def run(cmd):
     # script is killed, so too is the child process.
     try:
         child = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    except Exception, err:
+    except Exception as err:
         sys.exit("Error invoking command:\n%s\n\n%s\n" % (" ".join(cmd), err))
     # Use .communicate as can get deadlocks with .wait(),
     stdout, stderr = child.communicate()
@@ -50,7 +52,7 @@ def get_version(mira_binary):
         child = subprocess.Popen(cmd,
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.STDOUT)
-    except Exception, err:
+    except Exception as err:
         sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (" ".join(cmd), err))
         sys.exit(1)
     ver, tmp = child.communicate()

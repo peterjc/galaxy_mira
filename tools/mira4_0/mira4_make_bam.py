@@ -14,7 +14,7 @@ def run(cmd, log_handle):
         child = subprocess.Popen(cmd, shell=True,
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.STDOUT)
-    except Exception, err:
+    except Exception as err:
         sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (cmd, err))
         # TODO - call clean up?
         log_handle.write("Error invoking command:\n%s\n\n%s\n" % (cmd, err))

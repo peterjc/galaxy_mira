@@ -2,6 +2,8 @@
 """A simple wrapper script to call MIRA and collect its output.
 """
 
+from __future__ import print_function
+
 import os
 import shutil
 import subprocess
@@ -14,11 +16,11 @@ from optparse import OptionParser
 # Do we need any PYTHONPATH magic?
 from mira4_make_bam import make_bam
 
-WRAPPER_VER = "0.0.4"  # Keep in sync with the XML file
+WRAPPER_VER = "0.0.10"  # Keep in sync with the XML file
 
 
 def get_version(mira_binary):
-    """Run MIRA to find its version number"""
+    """Run MIRA to find its version number."""
     # At the commend line I would use: mira -v | head -n 1
     # however there is some pipe error when doing that here.
     cmd = [mira_binary, "-v"]
@@ -26,7 +28,7 @@ def get_version(mira_binary):
         child = subprocess.Popen(cmd,
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.STDOUT)
-    except Exception, err:
+    except Exception as err:
         sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (" ".join(cmd), err))
         sys.exit(1)
     ver, tmp = child.communicate()
@@ -87,9 +89,9 @@ mira_convert_ver = get_version(mira_convert)
 if not mira_convert_ver.strip().startswith("4.0"):
     sys.exit("This wrapper is for MIRA V4.0, not:\n%s\n%s" % (mira_ver, mira_convert))
 if options.version:
-    print "%s, MIRA wrapper version %s" % (mira_ver, WRAPPER_VER)
+    print("%s, MIRA wrapper version %s" % (mira_ver, WRAPPER_VER))
     if mira_ver != mira_convert_ver:
-        print "WARNING: miraconvert %s" % mira_convert_ver
+        print("WARNING: miraconvert %s" % mira_convert_ver)
     sys.exit(0)
 
 if not manifest:
@@ -139,11 +141,11 @@ def override_temp(manifest):
 
 def log_manifest(manifest):
     """Write the manifest file to stderr."""
-    sys.stderr.write("\n%s\nManifest file\n%s\n" % ("="*60, "="*60))
+    sys.stderr.write("\n%s\nManifest file\n%s\n" % ("=" * 60, "=" * 60))
     with open(manifest) as h:
         for line in h:
             sys.stderr.write(line)
-    sys.stderr.write("\n%s\nEnd of manifest\n%s\n" % ("="*60, "="*60))
+    sys.stderr.write("\n%s\nEnd of manifest\n%s\n" % ("=" * 60, "=" * 60))
 
 
 def collect_output(temp, name, handle):
@@ -228,13 +230,13 @@ assert not os.path.isdir(d), "Path %r already exists:\n%s" % (d, os.path.abspath
 try:
     # Check path access
     os.mkdir(d)
-except Exception, err:
+except Exception as err:
     log_manifest(manifest)
     sys.stderr.write("Error making directory %s\n%s" % (d, err))
     sys.exit(1)
 
-# print os.path.abspath(".")
-# print cmd
+# print(os.path.abspath("."))
+# print(cmd)
 
 if out_log and out_log != "-":
     handle = open(out_log, "w")
@@ -254,7 +256,7 @@ try:
     child = subprocess.Popen(cmd_list,
                              stdout=handle,
                              stderr=subprocess.STDOUT)
-except Exception, err:
+except Exception as err:
     log_manifest(manifest)
     sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (cmd, err))
     # TODO - call clean up?
@@ -270,7 +272,7 @@ handle.write("\n")
 handle.write("============================ MIRA has finished ===============================\n")
 handle.write("MIRA took %0.2f hours\n" % (run_time / 3600.0))
 if return_code:
-    print "MIRA took %0.2f hours" % (run_time / 3600.0)
+    print("MIRA took %0.2f hours" % (run_time / 3600.0))
     handle.write("Return error code %i from command:\n" % return_code)
     handle.write(cmd + "\n")
     handle.close()
@@ -291,7 +293,7 @@ if os.path.isfile("MIRA_assembly/MIRA_d_results/ec.log"):
     handle.write("============================ (end of ec.log) =================================\n")
     handle.flush()
 
-# print "Collecting output..."
+# print("Collecting output...")
 start_time = time.time()
 collect_output(temp, name, handle)
 collect_time = time.time() - start_time

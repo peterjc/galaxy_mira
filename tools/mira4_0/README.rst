@@ -108,6 +108,7 @@ v0.0.8  - Renamed folder now have a MIRA 4.9.x wrapper (internal change only).
 v0.0.9  - Additional unit tests now covering ``miraconvert``.
         - Re-include missing ``mirabait`` wrapper (accidentally left out when
           changed to using Planemo for uploading to the Tool Shed).
+v0.0.10 - Python 3 compatible syntax (internal change only).
 ======= ======================================================================
 
 

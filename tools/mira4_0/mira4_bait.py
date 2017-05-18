@@ -2,13 +2,15 @@
 """A simple wrapper script to call MIRA4's mirabait and collect its output.
 """
 
+from __future__ import print_function
+
 import os
 import shutil
 import subprocess
 import sys
 import time
 
-WRAPPER_VER = "0.0.5"  # Keep in sync with the XML file
+WRAPPER_VER = "0.0.10"  # Keep in sync with the XML file
 
 
 def get_version(mira_binary):
@@ -20,7 +22,7 @@ def get_version(mira_binary):
         child = subprocess.Popen(cmd,
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.STDOUT)
-    except Exception, err:
+    except Exception as err:
         sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (" ".join(cmd), err))
         sys.exit(1)
     ver, tmp = child.communicate()
@@ -30,7 +32,7 @@ def get_version(mira_binary):
         for line in ver.split("\n", 1):
             if " version " in line:
                 line = line.split()
-                return line[line.index("version")+1].rstrip(")")
+                return line[line.index("version") + 1].rstrip(")")
         sys.exit("Could not determine MIRA version:\n%s" % ver)
     return ver.split("\n", 1)[0]
 
@@ -47,7 +49,7 @@ mira_ver = get_version(mira_binary)
 if not mira_ver.strip().startswith("4.0"):
     sys.exit("This wrapper is for MIRA V4.0, not:\n%s" % mira_ver)
 if "-v" in sys.argv or "--version" in sys.argv:
-    print "%s, MIRA wrapper version %s" % (mira_ver, WRAPPER_VER)
+    print("%s, MIRA wrapper version %s" % (mira_ver, WRAPPER_VER))
     sys.exit(0)
 
 
@@ -89,7 +91,7 @@ try:
     child = subprocess.Popen(cmd_list,
                              stdout=subprocess.PIPE,
                              stderr=subprocess.STDOUT)
-except Exception, err:
+except Exception as err:
     sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (cmd, err))
     sys.exit(1)
 # Use .communicate as can get deadlocks with .wait(),
@@ -97,7 +99,7 @@ stdout, stderr = child.communicate()
 assert stderr is None  # Due to way we ran with subprocess
 run_time = time.time() - start_time
 return_code = child.returncode
-print "mirabait took %0.2f minutes" % (run_time / 60.0)
+print("mirabait took %0.2f minutes" % (run_time / 60.0))
 
 if return_code:
     sys.stderr.write(stdout)
