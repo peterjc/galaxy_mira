@@ -50,6 +50,8 @@ message if there is a version mismatch (otherwise due to API changes the
 MIRA error messages tend to be very long and somewhare confusing).
 """
 
+from __future__ import print_function
+
 import subprocess
 import sys
 
@@ -65,7 +67,7 @@ def get_version(mira_binary):
         child = subprocess.Popen(cmd,
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.STDOUT)
-    except Exception, err:
+    except Exception as err:
         sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (" ".join(cmd), err))
         sys.exit(1)
     ver, tmp = child.communicate()
@@ -75,7 +77,7 @@ def get_version(mira_binary):
         for line in ver.split("\n", 1):
             if " version " in line:
                 line = line.split()
-                return line[line.index("version")+1].rstrip(")")
+                return line[line.index("version") + 1].rstrip(")")
         sys.exit("Could not determine MIRA version:\n%s" % ver)
     return ver.split("\n", 1)[0]
 
