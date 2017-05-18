@@ -7,7 +7,10 @@
 # for background,
 # http://blastedbio.blogspot.com/2013/09/using-travis-ci-for-testing-galaxy-tools.html
 
-# Galaxy currently only supports Python 2.6
+# We don't need sudo so can avoid slower legacy TravisCI infrastructure
+sudo: false
+
+# Galaxy currently only supports Python 2.7
 language: python
 matrix:
   include:
@@ -15,9 +18,6 @@ matrix:
       env: GALAXY_BRANCH=master
     - python: "2.7"
       env: GALAXY_BRANCH=dev
-
-# We don't need sudo so can avoid slower legacy TravisCI infrastructure
-sudo: false
 
 # Planemo Lint
 # ============
@@ -47,15 +47,18 @@ sudo: false
 # installed last.
 
 before_install:
- - echo "Using planemo lint to check for obvious tool errors"
+ - "if grep -P '\t' *.rst */*/*.rst; then echo 'Tabs are bad, please use four spaces.'; false; fi"
+ - "if grep -P '\t' */*/*.xml; then echo 'Tabs are bad, please use four spaces.'; false; fi"
+ - "if grep -P '\t' */*/.shed.yml; then echo 'Tabs are bad, please use four spaces.'; false; fi"
  - pip install --upgrade pip setuptools
- - pip install planemo
- - planemo --version
- - planemo shed_lint --tools --fail_level error --ensure_metadata --urls -r ${TRAVIS_BUILD_DIR}
- - echo "Using pep8 and flake8 to check Python code"
- - pip install pep8 flake8
- - pep8 --max-line-length 110 .
+ - pip install flake8 restructuredtext-lint
+ - echo "Using flake8 to check Python code"
  - flake8 --max-line-length 110 .
+ - echo "Using restructuredtext-lint to check our RST files"
+ - restructuredtext-lint *.rst */*/*.rst
+ - pip install planemo requests
+ - echo "Using planemo lint to check for obvious tool errors"
+ - planemo shed_lint --tools --fail_level error --ensure_metadata --urls -r ${TRAVIS_BUILD_DIR}
  - echo "Fixing permissions on Python eggs cache folder"
  - mkdir -p "$HOME/.python-eggs"
  - chmod 700 "$HOME/.python-eggs"
