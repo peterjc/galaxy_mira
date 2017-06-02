@@ -156,8 +156,8 @@ data = ${f.ext}::$f
             <param name="filenames" type="data" format="fastq,mira" multiple="true" optional="false" label="Read file(s)"
                    help="Multiple files allowed, for example paired reads can be given as two files (MIRA looks at read names to identify pairs)." />
         </repeat>
-        <param name="maf_wanted" type="boolean" label="Output mapping in MIRA's own format?" checked="False" />
-        <param name="bam_wanted" type="boolean" label="Convert mapping into BAM format?" checked="True" />
+        <param name="maf_wanted" type="boolean" label="Output mapping in MIRA's own format?" checked="false" />
+        <param name="bam_wanted" type="boolean" label="Convert mapping into BAM format?" checked="true" />
     </inputs>
     <outputs>
         <data name="out_fasta" format="fasta" label="MIRA #if str($strain_setup)=='same' then 'same strain' else 'reference' # mapping contigs (FASTA)" />

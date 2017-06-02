@@ -41,13 +41,13 @@ python $__tool_directory__/mira4_convert.py
         <param name="min_reads" type="integer" optional="true" value="0" min="0"
                label="Minimum reads per contig"
                help="e.g. Set to 5 to exclude low coverage contigs with only a few reads. Default is to keep all contigs (minimum zero)." />
-        <param name="maf_wanted" type="boolean" label="Output assembly in MIRA's own format? (useful if filtering)" checked="False" />
-        <param name="fasta_wanted" type="boolean" label="Convert assembly into (unpadded) FASTA?" checked="True" />
-        <param name="bam_wanted" type="boolean" label="Convert assembly into (upadded) BAM format?" checked="False" />
+        <param name="maf_wanted" type="boolean" label="Output assembly in MIRA's own format? (useful if filtering)" checked="false" />
+        <param name="fasta_wanted" type="boolean" label="Convert assembly into (unpadded) FASTA?" checked="true" />
+        <param name="bam_wanted" type="boolean" label="Convert assembly into (upadded) BAM format?" checked="false" />
         <!-- Don't yet have a Galaxy datatype defined for ace:
-        <param name="ace_wanted" type="boolean" label="Convert assembly in ACE format?" checked="False" />
+        <param name="ace_wanted" type="boolean" label="Convert assembly in ACE format?" checked="false" />
         -->
-        <param name="cstats_wanted" type="boolean" label="Assembly statistics file?" checked="False" />
+        <param name="cstats_wanted" type="boolean" label="Assembly statistics file?" checked="false" />
     </inputs>
     <outputs>
         <data name="out_maf" format="mira" label="$mira_file.name (filtered)">
