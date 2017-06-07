@@ -64,7 +64,7 @@ def get_version(mira_binary):
     # however there is some pipe error when doing that here.
     cmd = [mira_binary, "-v"]
     try:
-        child = subprocess.Popen(cmd,
+        child = subprocess.Popen(cmd, universal_newlines=True,
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.STDOUT)
     except Exception as err:

@@ -12,6 +12,7 @@ import tempfile
 def run(cmd, log_handle):
     try:
         child = subprocess.Popen(cmd, shell=True,
+                                 universal_newlines=True,
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.STDOUT)
     except Exception as err:
