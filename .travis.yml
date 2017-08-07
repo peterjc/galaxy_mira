@@ -61,14 +61,12 @@ matrix:
 # Installing Tool Dependencies
 # ============================
 #
-# We also need to install our tool dependencies, e.g. MIRA binaries
-# which we will do via "planemo dependency_script" rather than via a
-# (local) Galaxy Tool Shed. Note we need to install the different
-# versions of MIRA into separate directories as the binary filenames
-# clash otherwise. Although the tool_dependencies.xml files do define
-# unique environment variables $MIRA3, $MIRA4 and $MIRA4_9 at the moment
-# the MIRA 3.4 wrapper only looks at $PATH and therefore this must be
-# installed last.
+# We will follow current Galaxy Tool development best practise and use
+# conda to install our tool dependencies, rather than manual installs
+# or using the legacy Galaxy Tool Shed packages.
+#
+# However we still have to worry about dependencies assumed by Galaxy
+# itself (e.g. samtools).
 
 before_install:
  - "if grep -P '\t' *.rst */*/*.rst; then echo 'Tabs are bad, please use four spaces.'; false; fi"
@@ -86,22 +84,6 @@ before_install:
  - echo "Fixing permissions on Python eggs cache folder"
  - mkdir -p "$HOME/.python-eggs"
  - chmod 700 "$HOME/.python-eggs"
- - export DOWNLOAD_CACHE=/tmp/download_cache && mkdir $DOWNLOAD_CACHE
- - echo "Downloading and setting up MIRA 4.0..."
- - export INSTALL_DIR=/tmp/dep_install_mira_4_0 && mkdir $INSTALL_DIR
- - planemo dependency_script ${TRAVIS_BUILD_DIR}/packages/package_mira_4_0_2
- - bash dep_install.sh
- - source env.sh
- - echo "Downloading and setting up MIRA 4.9..."
- - export INSTALL_DIR=/tmp/dep_install_mira_4_9 && mkdir $INSTALL_DIR
- - planemo dependency_script ${TRAVIS_BUILD_DIR}/packages/package_mira_4_9_5
- - bash dep_install.sh
- - source env.sh
- - echo "Downloading and setting up MIRA 3.4..."
- - export INSTALL_DIR=/tmp/dep_install_mira_3_4 && mkdir $INSTALL_DIR
- - planemo dependency_script ${TRAVIS_BUILD_DIR}/packages/package_mira_3_4_1_1
- - bash dep_install.sh
- - source env.sh
  - echo "Installing samtools..."
  - cd ${TRAVIS_BUILD_DIR} && mkdir samtools && cd samtools
  - wget http://depot.galaxyproject.org/package/linux/x86_64/samtools/samtools-0.1.19-Linux-x86_64.tgz
@@ -137,7 +119,7 @@ install:
 script:
  - cd ${TRAVIS_BUILD_DIR}
  - planemo --version
- - planemo test --no_conda_auto_install --galaxy_root ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH} --skip_venv tools/
+ - planemo test --conda_dependency_resolution --galaxy_root ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH} --skip_venv tools/
 
 notifications:
   email: false
