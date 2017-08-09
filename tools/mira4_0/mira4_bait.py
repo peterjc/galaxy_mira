@@ -10,7 +10,7 @@ import subprocess
 import sys
 import time
 
-WRAPPER_VER = "0.0.10"  # Keep in sync with the XML file
+WRAPPER_VER = "0.0.11"  # Keep in sync with the XML file
 
 
 def get_version(mira_binary):
@@ -37,14 +37,17 @@ def get_version(mira_binary):
     return ver.split("\n", 1)[0]
 
 
-try:
+if "MIRA4" in os.environ:
     mira_path = os.environ["MIRA4"]
-except KeyError:
-    sys.exit("Environment variable $MIRA4 not set")
-mira_binary = os.path.join(mira_path, "mirabait")
-if not os.path.isfile(mira_binary):
-    sys.exit("Missing mirabait under $MIRA4, %r\nFolder contained: %s"
-             % (mira_binary, ", ".join(os.listdir(mira_path))))
+    mira_binary = os.path.join(mira_path, "mirabait")
+    if not os.path.isfile(mira_binary):
+        sys.exit("Missing mirabait under $MIRA4, %r\nFolder contained: %s"
+                 % (mira_binary, ", ".join(os.listdir(mira_path))))
+else:
+    sys.stderr.write("DEBUG: Since $MIRA4 is not set, assuming mira binaries are on $PATH.\n")
+    mira_path = None
+    mira_binary = "mirabait"
+
 mira_ver = get_version(mira_binary)
 if not mira_ver.strip().startswith("4.0"):
     sys.exit("This wrapper is for MIRA V4.0, not:\n%s" % mira_ver)

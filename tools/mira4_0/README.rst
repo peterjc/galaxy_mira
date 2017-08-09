@@ -111,6 +111,8 @@ v0.0.9  - Additional unit tests now covering ``miraconvert``.
 v0.0.10 - Python 3 compatible syntax (internal change only).
         - Use ``<command detect_errors="aggressive">`` (internal change only).
         - Single quote command line arguments (internal change only).
+v0.0.11 - For compatibility with MIRA installed from the BioConda package,
+          if ``MIRA4$`` is not set, assume binaries are on the ``$PATH``.
 ======= ======================================================================
 
 
