@@ -16,7 +16,7 @@ from optparse import OptionParser
 # Do we need any PYTHONPATH magic?
 from mira4_make_bam import make_bam
 
-WRAPPER_VER = "0.0.10"  # Keep in sync with the XML file
+WRAPPER_VER = "0.0.11"  # Keep in sync with the XML file
 
 
 def get_version(mira_binary):
@@ -69,18 +69,21 @@ out_bam = options.bam
 out_fasta = options.fasta
 out_log = options.log
 
-try:
+if "MIRA4" in os.environ:
     mira_path = os.environ["MIRA4"]
-except KeyError:
-    sys.exit("Environment variable $MIRA4 not set")
-mira_binary = os.path.join(mira_path, "mira")
-if not os.path.isfile(mira_binary):
-    sys.exit("Missing mira under $MIRA4, %r\nFolder contained: %s"
-             % (mira_binary, ", ".join(os.listdir(mira_path))))
-mira_convert = os.path.join(mira_path, "miraconvert")
-if not os.path.isfile(mira_convert):
-    sys.exit("Missing miraconvert under $MIRA4, %r\nFolder contained: %s"
-             % (mira_convert, ", ".join(os.listdir(mira_path))))
+    mira_binary = os.path.join(mira_path, "mira")
+    if not os.path.isfile(mira_binary):
+        sys.exit("Missing mira under $MIRA4, %r\nFolder contained: %s"
+                 % (mira_binary, ", ".join(os.listdir(mira_path))))
+    mira_convert = os.path.join(mira_path, "miraconvert")
+    if not os.path.isfile(mira_convert):
+        sys.exit("Missing miraconvert under $MIRA4, %r\nFolder contained: %s"
+                 % (mira_convert, ", ".join(os.listdir(mira_path))))
+else:
+    sys.stderr.write("DEBUG: Since $MIRA4 is not set, assuming mira binaries are on $PATH.\n")
+    mira_path = None
+    mira_binary = "mira"
+    mira_convert = "miraconvert"
 
 mira_ver = get_version(mira_binary)
 if not mira_ver.strip().startswith("4.0"):
