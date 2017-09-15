@@ -10,7 +10,7 @@ to where Galaxy expects the files, and convert MIRA's TCS file into a tab
 separated file for use in Galaxy).
 
 It is available from the Galaxy Tool Shed at:
-http://toolshed.g2.bx.psu.edu/view/peterjc/mira_assembler 
+http://toolshed.g2.bx.psu.edu/view/peterjc/mira_assembler
 
 
 Automated Installation
@@ -32,7 +32,7 @@ There are just two Galaxy files to install:
 The suggested location is a new ``tools/mira3`` folder. You will also need to
 modify the ``tools_conf.xml`` file to tell Galaxy to offer the tool by adding
 the line::
- 
+
   <tool file="mira3/mira.xml" />
 
 If you wish to run the unit tests, also move/copy the ``test-data/`` files
@@ -116,7 +116,7 @@ To just build and check the tar ball, use::
 
     $ planemo shed_upload --tar_only tools/mira3/
     ...
-    $ tar -tzf shed_upload.tar.gz 
+    $ tar -tzf shed_upload.tar.gz
     test-data/empty_file.dat
     test-data/tvc_contigs.fasta
     test-data/tvc_mini.fastq

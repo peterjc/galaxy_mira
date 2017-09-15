@@ -9,7 +9,7 @@ long_description: |
 
   Other platforms where compilation from source would be required (e.g. 32 bit Linux)
   are not supported by this automated installation script.
-  
+
   http://chevreux.org/projects_mira.html
   http://sourceforge.net/projects/mira-assembler/
 categories:

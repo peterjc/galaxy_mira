@@ -54,7 +54,7 @@ COMMON_SETTINGS
 ##remove_rollover_tmps, remove_tmp_directory
 -OUT:rrot=1:rtd=1
 
-##put mira temp directory on local storage                                                                              
+##put mira temp directory on local storage
 -DI:trt=/tmp
 
     </command>
@@ -141,7 +141,7 @@ COMMON_SETTINGS
     </outputs>
     <tests>
         <!-- Based on the MIRA v3.4.1.1 bundled minidemo/estdemo2 which uses
-             strain data and miraSearchESTSNPs. Here we just assemble it. --> 
+             strain data and miraSearchESTSNPs. Here we just assemble it. -->
         <test>
             <param name="job_method" value="denovo" />
             <param name="job_type" value="est" />
@@ -150,7 +150,7 @@ COMMON_SETTINGS
             <param name="condSanger|use" value="true" />
             <param name="condSanger|filename" value="tvc_mini.fastq" ftype="fastq" />
             <param name="condRoche|use" value="false" />
-            <param name="condIllumina|use" value="false" /> 
+            <param name="condIllumina|use" value="false" />
             <param name="condIonTorrent|use" value="false" />
             <output name="out_fasta" file="tvc_contigs.fasta" ftype="fasta" />
             <output name="out_qual" file="empty_file.dat" compare="contains" />
@@ -188,7 +188,7 @@ Computer Science and Biology: Proceedings of the German Conference on Bioinforma
 http://www.bioinfo.de/isb/gcb99/talks/chevreux/main.html
 
 This wrapper is available to install into other Galaxy Instances via the Galaxy
-Tool Shed at http://toolshed.g2.bx.psu.edu/view/peterjc/mira_assembler 
+Tool Shed at http://toolshed.g2.bx.psu.edu/view/peterjc/mira_assembler
 
     </help>
     <citations>

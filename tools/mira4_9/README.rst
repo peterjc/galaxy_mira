@@ -41,7 +41,7 @@ Manual Installation
 
 First install the 'mira' datatype for Galaxy, available here:
 
-* http://toolshed.g2.bx.psu.edu/view/peterjc/mira_datatypes 
+* http://toolshed.g2.bx.psu.edu/view/peterjc/mira_datatypes
 
 There are various Python and XML files to install into Galaxy:
 
@@ -107,7 +107,7 @@ To just build and check the tar ball, use::
 
     $ planemo shed_upload --tar_only mira4_9/
     ...
-    $ tar -tzf shed_upload.tar.gz 
+    $ tar -tzf shed_upload.tar.gz
     ...
 
 

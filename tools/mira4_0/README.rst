@@ -9,7 +9,7 @@ This tool is a short Python script (to collect the MIRA output and move it
 to where Galaxy expects the files) and associated Galaxy wrapper XML file.
 
 It is available from the Galaxy Tool Shed at:
-http://toolshed.g2.bx.psu.edu/view/peterjc/mira4_assembler 
+http://toolshed.g2.bx.psu.edu/view/peterjc/mira4_assembler
 
 It uses a Galaxy datatype definition 'mira' for the MIRA Assembly Format,
 http://toolshed.g2.bx.psu.edu/view/peterjc/mira_datatypes
@@ -38,7 +38,7 @@ Manual Installation
 
 First install the 'mira' datatype for Galaxy, available here:
 
-* http://toolshed.g2.bx.psu.edu/view/peterjc/mira_datatypes 
+* http://toolshed.g2.bx.psu.edu/view/peterjc/mira_datatypes
 
 There are various Python and XML files to install into Galaxy:
 
@@ -138,7 +138,7 @@ To just build and check the tar ball, use::
 
     $ planemo shed_upload --tar_only tools/mira4_0/
     ...
-    $ tar -tzf shed_upload.tar.gz 
+    $ tar -tzf shed_upload.tar.gz
     test-data/U13small_m.fastq
     ...
 

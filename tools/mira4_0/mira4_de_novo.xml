@@ -38,7 +38,7 @@ parameters = -NW:cmrnl=no -DI:trt=/tmp -OUT:orc=no
 ## point to a local hard drive (not something like NFS on network).
 ## We replace /tmp with an environment variable via mira4.py
 ##
-## -OUT:orc=no is short for -OUTPUT:output_result_caf=no 
+## -OUT:orc=no is short for -OUTPUT:output_result_caf=no
 ## which turns off an output file we don't want anyway.
 
 #for $rg in $read_group
@@ -142,8 +142,8 @@ data = ${f.ext}::$f
         <data name="out_maf" format="mira" label="MIRA de novo assembly">
             <filter>maf_wanted is True</filter>
         </data>
-        <!-- TODO?                                                                                                                          
-        <data name="out_contigstats" format="tabular" label="MIRA contig stats" />                                                          
+        <!-- TODO?
+        <data name="out_contigstats" format="tabular" label="MIRA contig stats" />
         -->
         <data name="out_log" format="txt" label="MIRA de novo log" />
     </outputs>
