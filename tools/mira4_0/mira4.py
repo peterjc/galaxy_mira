@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-"""A simple wrapper script to call MIRA and collect its output.
-"""
+"""A simple wrapper script to call MIRA and collect its output."""
 
 from __future__ import print_function
 
@@ -152,7 +151,7 @@ def log_manifest(manifest):
 
 
 def collect_output(temp, name, handle):
-    """Moves files to the output filenames (global variables)."""
+    """Move files to the output filenames (global variables)."""
     f = "%s/%s_assembly/%s_d_results" % (temp, name, name)
     if not os.path.isdir(f):
         log_manifest(manifest)
@@ -207,6 +206,7 @@ def collect_output(temp, name, handle):
 
 
 def clean_up(temp, name):
+    """Remove temp files."""
     folder = "%s/%s_assembly" % (temp, name)
     if os.path.isdir(folder):
         shutil.rmtree(folder)

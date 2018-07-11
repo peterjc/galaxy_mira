@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-"""Wrapper script using miraconvert & samtools to get BAM from MIRA.
-"""
+"""Wrapper script using miraconvert & samtools to get BAM from MIRA."""
 
 import os
 import shutil

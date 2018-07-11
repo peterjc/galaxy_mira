@@ -1,9 +1,11 @@
+"""Python code to validate parameters in the Galaxy XML definition."""
+
 # Called from the Galaxy Tool XML file
 # import sys
 
 
 def validate_input(trans, error_map, param_values, page_param_map):
-    """Validates the min_size/max_size user input, before execution."""
+    """Validate the min_size/max_size user input, before execution."""
     err_list = []
     for read_group in param_values["read_group"]:
         err = dict()

@@ -59,7 +59,7 @@ WRAPPER_VER = "0.0.2"  # Keep in sync with the XML file
 
 
 def get_version(mira_binary):
-    """Run MIRA to find its version number"""
+    """Run MIRA to find its version number."""
     # At the commend line I would use: mira -v | head -n 1
     # however there is some pipe error when doing that here.
     cmd = [mira_binary, "-v"]

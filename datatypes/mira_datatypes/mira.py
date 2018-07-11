@@ -1,16 +1,15 @@
-"""
-MiraAssemblyFormat class for the 'mira' format within Galaxy
-"""
+"""MiraAssemblyFormat class for the 'mira' format within Galaxy."""
 
 from galaxy.datatypes.data import Text
 
 
 class MiraAssemblyFormat(Text):
-    """MIRA Assembly Format  data"""
+    """MIRA Assembly Format  data."""
+
     file_ext = "mira"
 
     def sniff(self, filename):
-        """Determines whether the file is a MIRA Assembly Format file.
+        """Determine if the file is a MIRA Assembly Format file.
 
         Note currently this only detects MIRA Assembly Format v2.0,
         as used in MIRA v3.9 and v4.0.
@@ -30,7 +29,10 @@ class MiraAssemblyFormat(Text):
         return True
 
     def merge(split_files, output_file):
-        """Merging multiple MIRA files is non-trivial and may not be possible..."""
+        """Merge MIRA assembly files (not implemented).
+
+        Merging multiple MIRA files is non-trivial and may not be possible...
+        """
         if len(split_files) == 1:
             # For one file only, use base class method (move/copy)
             return Text.merge(split_files, output_file)

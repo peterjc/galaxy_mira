@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-"""A simple wrapper script to call MIRA and collect its output.
-"""
+"""A simple wrapper script to call MIRA and collect its output."""
 
 from __future__ import print_function
 
@@ -14,7 +13,7 @@ WRAPPER_VER = "0.0.12"  # Keep in sync with the XML file
 
 
 def get_version():
-    """Run MIRA to find its version number"""
+    """Run MIRA to find its version number."""
     # At the commend line I would use: mira -v | head -n 1
     # however there is some pipe error when doing that here.
     cmd = ["mira", "-v"]
