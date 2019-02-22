@@ -48,7 +48,7 @@ This script is intended to be used as part of my Galaxy wrappers for MIRA,
 where it will capture and record the version used - and give a clear error
 message if there is a version mismatch (otherwise due to API changes the
 MIRA error messages tend to be very long and somewhare confusing).
-"""
+"""  # noqa: E501
 
 from __future__ import print_function
 

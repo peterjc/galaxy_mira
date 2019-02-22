@@ -326,14 +326,14 @@ handle.flush()
 if os.path.isfile("MIRA_assembly/MIRA_d_results/ec.log"):
     handle.write("\n")
     handle.write(
-        "====================== Extract Large Contigs failed ==========================\n"
+        "====================== Extract Large Contigs failed ==========================\n"  # noqa: E501
     )
     e = open("MIRA_assembly/MIRA_d_results/ec.log", "rU")
     for line in e:
         handle.write(line)
     e.close()
     handle.write(
-        "============================ (end of ec.log) =================================\n"
+        "============================ (end of ec.log) =================================\n"  # noqa: E501
     )
     handle.flush()
 

@@ -36,7 +36,7 @@ def run(cmd, log_handle):
 
 def depad(fasta_file, sam_file, bam_file, log_handle):
     log_handle.write(
-        "\n================= Converting MIRA assembly from SAM to BAM ===================\n"
+        "\n================= Converting MIRA assembly from SAM to BAM ===================\n"  # noqa: E501
     )
     # Also doing SAM to (uncompressed) BAM during depad
     bam_stem = (
@@ -54,7 +54,7 @@ def depad(fasta_file, sam_file, bam_file, log_handle):
         return "samtools depad or sort failed to produce BAM file"
 
     log_handle.write(
-        "\n====================== Indexing MIRA assembly BAM file =======================\n"
+        "\n====================== Indexing MIRA assembly BAM file =======================\n"  # noqa: E501
     )
     cmd = 'samtools index "%s.bam"' % bam_stem
     return_code = run(cmd, log_handle)
@@ -74,7 +74,7 @@ def make_bam(mira_convert, maf_file, fasta_file, bam_file, log_handle):
         return "Missing padded FASTA file: %r" % fasta_file
 
     log_handle.write(
-        "\n====================== Converting MIRA assembly to SAM =======================\n"
+        "\n====================== Converting MIRA assembly to SAM =======================\n"  # noqa: E501
     )
     tmp_dir = tempfile.mkdtemp()
     sam_file = os.path.join(tmp_dir, "x.sam")
