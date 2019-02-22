@@ -18,9 +18,12 @@ def get_version(mira_binary):
     # however there is some pipe error when doing that here.
     cmd = [mira_binary, "-v"]
     try:
-        child = subprocess.Popen(cmd, universal_newlines=True,
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.STDOUT)
+        child = subprocess.Popen(
+            cmd,
+            universal_newlines=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
     except Exception as err:
         sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (" ".join(cmd), err))
         sys.exit(1)
@@ -40,10 +43,14 @@ if "MIRA4" in os.environ:
     mira_path = os.environ["MIRA4"]
     mira_binary = os.path.join(mira_path, "mirabait")
     if not os.path.isfile(mira_binary):
-        sys.exit("Missing mirabait under $MIRA4, %r\nFolder contained: %s"
-                 % (mira_binary, ", ".join(os.listdir(mira_path))))
+        sys.exit(
+            "Missing mirabait under $MIRA4, %r\nFolder contained: %s"
+            % (mira_binary, ", ".join(os.listdir(mira_path)))
+        )
 else:
-    sys.stderr.write("DEBUG: Since $MIRA4 is not set, assuming mira binaries are on $PATH.\n")
+    sys.stderr.write(
+        "DEBUG: Since $MIRA4 is not set, assuming mira binaries are on $PATH.\n"
+    )
     mira_path = None
     mira_binary = "mirabait"
 
@@ -55,7 +62,9 @@ if "-v" in sys.argv or "--version" in sys.argv:
     sys.exit(0)
 
 
-format, output_choice, strand_choice, kmer_length, min_occurance, bait_file, in_file, out_file = sys.argv[1:]
+format, output_choice, strand_choice, kmer_length, min_occurance, bait_file, in_file, out_file = sys.argv[
+    1:
+]
 
 if format.startswith("fastq"):
     format = "fastq"
@@ -67,9 +76,20 @@ elif format != "fasta":
 assert out_file.endswith(".dat")
 out_file_stem = out_file[:-4]
 
-cmd_list = [mira_binary, "-f", format, "-t", format,
-            "-k", kmer_length, "-n", min_occurance,
-            bait_file, in_file, out_file_stem]
+cmd_list = [
+    mira_binary,
+    "-f",
+    format,
+    "-t",
+    format,
+    "-k",
+    kmer_length,
+    "-n",
+    min_occurance,
+    bait_file,
+    in_file,
+    out_file_stem,
+]
 if output_choice == "pos":
     pass
 elif output_choice == "neg":
@@ -90,9 +110,12 @@ cmd = " ".join(cmd_list)
 start_time = time.time()
 try:
     # Run MIRA
-    child = subprocess.Popen(cmd_list, universal_newlines=True,
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.STDOUT)
+    child = subprocess.Popen(
+        cmd_list,
+        universal_newlines=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
 except Exception as err:
     sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (cmd, err))
     sys.exit(1)
@@ -105,8 +128,7 @@ print("mirabait took %0.2f minutes" % (run_time / 60.0))
 
 if return_code:
     sys.stderr.write(stdout)
-    sys.exit("Return error code %i from command:\n%s" % (return_code, cmd),
-             return_code)
+    sys.exit("Return error code %i from command:\n%s" % (return_code, cmd), return_code)
 
 # Capture output
 out_tmp = out_file_stem + "." + format

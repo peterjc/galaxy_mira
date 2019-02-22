@@ -10,10 +10,13 @@ import tempfile
 
 def run(cmd, log_handle):
     try:
-        child = subprocess.Popen(cmd, shell=True,
-                                 universal_newlines=True,
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.STDOUT)
+        child = subprocess.Popen(
+            cmd,
+            shell=True,
+            universal_newlines=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
     except Exception as err:
         sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (cmd, err))
         # TODO - call clean up?
@@ -32,17 +35,27 @@ def run(cmd, log_handle):
 
 
 def depad(fasta_file, sam_file, bam_file, log_handle):
-    log_handle.write("\n================= Converting MIRA assembly from SAM to BAM ===================\n")
+    log_handle.write(
+        "\n================= Converting MIRA assembly from SAM to BAM ===================\n"
+    )
     # Also doing SAM to (uncompressed) BAM during depad
-    bam_stem = bam_file + ".tmp"  # Have write permissions and want final file in this folder
-    cmd = 'samtools depad -S -u -T "%s" "%s" | samtools sort - "%s"' % (fasta_file, sam_file, bam_stem)
+    bam_stem = (
+        bam_file + ".tmp"
+    )  # Have write permissions and want final file in this folder
+    cmd = 'samtools depad -S -u -T "%s" "%s" | samtools sort - "%s"' % (
+        fasta_file,
+        sam_file,
+        bam_stem,
+    )
     return_code = run(cmd, log_handle)
     if return_code:
         return "Error %i from command:\n%s" % (return_code, cmd)
     if not os.path.isfile(bam_stem + ".bam"):
         return "samtools depad or sort failed to produce BAM file"
 
-    log_handle.write("\n====================== Indexing MIRA assembly BAM file =======================\n")
+    log_handle.write(
+        "\n====================== Indexing MIRA assembly BAM file =======================\n"
+    )
     cmd = 'samtools index "%s.bam"' % bam_stem
     return_code = run(cmd, log_handle)
     if return_code:
@@ -60,7 +73,9 @@ def make_bam(mira_convert, maf_file, fasta_file, bam_file, log_handle):
     if not os.path.isfile(fasta_file):
         return "Missing padded FASTA file: %r" % fasta_file
 
-    log_handle.write("\n====================== Converting MIRA assembly to SAM =======================\n")
+    log_handle.write(
+        "\n====================== Converting MIRA assembly to SAM =======================\n"
+    )
     tmp_dir = tempfile.mkdtemp()
     sam_file = os.path.join(tmp_dir, "x.sam")
 

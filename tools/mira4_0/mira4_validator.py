@@ -36,7 +36,9 @@ def validate_input(trans, error_map, param_values, page_param_map):
             try:
                 min_size_int = int(min_size)
                 if min_size_int < 0:
-                    err["min_size"] = "Minumum size must not be negative (%i)" % min_size_int
+                    err["min_size"] = (
+                        "Minumum size must not be negative (%i)" % min_size_int
+                    )
                     min_size = None  # Avoid doing comparison below
             except ValueError:
                 err["min_size"] = "Minimum size is not an integer (%s)" % min_size
@@ -46,14 +48,19 @@ def validate_input(trans, error_map, param_values, page_param_map):
             try:
                 max_size_int = int(max_size)
                 if max_size_int < 0:
-                    err["max_size"] = "Maximum size must not be negative (%i)" % max_size_int
+                    err["max_size"] = (
+                        "Maximum size must not be negative (%i)" % max_size_int
+                    )
                     max_size = None  # Avoid doing comparison below
             except ValueError:
                 err["max_size"] = "Maximum size is not an integer (%s)" % max_size
                 max_size = None  # Avoid doing comparison below
 
         if min_size and max_size and min_size_int > max_size_int:
-            msg = "Minimum size must be less than maximum size (%i vs %i)" % (min_size_int, max_size_int)
+            msg = "Minimum size must be less than maximum size (%i vs %i)" % (
+                min_size_int,
+                max_size_int,
+            )
             err["min_size"] = msg
             err["max_size"] = msg
 

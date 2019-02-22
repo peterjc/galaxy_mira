@@ -37,9 +37,13 @@ class MiraAssemblyFormat(Text):
             # For one file only, use base class method (move/copy)
             return Text.merge(split_files, output_file)
         if not split_files:
-            raise ValueError("Given no MIRA, %r, to merge into %s"
-                             % (split_files, output_file))
-        raise NotImplementedError("Merging MIRA Assembly Files has not been implemented")
+            raise ValueError(
+                "Given no MIRA, %r, to merge into %s" % (split_files, output_file)
+            )
+        raise NotImplementedError(
+            "Merging MIRA Assembly Files has not been implemented"
+        )
+
     merge = staticmethod(merge)
 
     def split(cls, input_datasets, subdir_generator_function, split_params):
@@ -47,4 +51,5 @@ class MiraAssemblyFormat(Text):
         if split_params is None:
             return None
         raise NotImplementedError("Can't yet split a MIRA Assembly Format file")
+
     merge = staticmethod(merge)

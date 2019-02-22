@@ -18,9 +18,12 @@ def get_version():
     # however there is some pipe error when doing that here.
     cmd = ["mira", "-v"]
     try:
-        child = subprocess.Popen(cmd, universal_newlines=True,
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.STDOUT)
+        child = subprocess.Popen(
+            cmd,
+            universal_newlines=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
     except Exception as err:
         sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (" ".join(cmd), err))
         sys.exit(1)
@@ -45,11 +48,13 @@ def collect_output(temp, name):
     if not os.listdir(f):
         sys.exit("Empty output folder")
     missing = []
-    for old, new in [("%s/%s_out.unpadded.fasta" % (f, name), out_fasta),
-                     ("%s/%s_out.unpadded.fasta.qual" % (f, name), out_qual),
-                     ("%s/%s_out.wig" % (f, name), out_wig),
-                     ("%s/%s_out.caf" % (f, name), out_caf),
-                     ("%s/%s_out.ace" % (f, name), out_ace)]:
+    for old, new in [
+        ("%s/%s_out.unpadded.fasta" % (f, name), out_fasta),
+        ("%s/%s_out.unpadded.fasta.qual" % (f, name), out_qual),
+        ("%s/%s_out.wig" % (f, name), out_wig),
+        ("%s/%s_out.caf" % (f, name), out_caf),
+        ("%s/%s_out.ace" % (f, name), out_ace),
+    ]:
         if not os.path.isfile(old):
             missing.append(os.path.splitext(old)[-1])
         else:
@@ -90,9 +95,9 @@ except Exception as err:
 handle = open(out_log, "w")
 try:
     # Run MIRA
-    child = subprocess.Popen(cmd_list, universal_newlines=True,
-                             stdout=handle,
-                             stderr=subprocess.STDOUT)
+    child = subprocess.Popen(
+        cmd_list, universal_newlines=True, stdout=handle, stderr=subprocess.STDOUT
+    )
 except Exception as err:
     sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (cmd, err))
     # TODO - call clean up?

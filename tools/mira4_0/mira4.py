@@ -24,9 +24,12 @@ def get_version(mira_binary):
     # however there is some pipe error when doing that here.
     cmd = [mira_binary, "-v"]
     try:
-        child = subprocess.Popen(cmd, universal_newlines=True,
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.STDOUT)
+        child = subprocess.Popen(
+            cmd,
+            universal_newlines=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
     except Exception as err:
         sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (" ".join(cmd), err))
         sys.exit(1)
@@ -36,31 +39,56 @@ def get_version(mira_binary):
 
 
 # Parse Command Line
-usage = """Galaxy MIRA4 wrapper script v%s - use as follows:
+usage = (
+    """Galaxy MIRA4 wrapper script v%s - use as follows:
 
 $ python mira4.py ...
 
 This will run the MIRA binary and collect its output files as directed.
-""" % WRAPPER_VER
+"""
+    % WRAPPER_VER
+)
 parser = OptionParser(usage=usage)
-parser.add_option("-m", "--manifest", dest="manifest",
-                  default=None, metavar="FILE",
-                  help="MIRA manifest filename")
-parser.add_option("--maf", dest="maf",
-                  default="-", metavar="FILE",
-                  help="MIRA MAF output filename")
-parser.add_option("--bam", dest="bam",
-                  default="-", metavar="FILE",
-                  help="Unpadded BAM output filename")
-parser.add_option("--fasta", dest="fasta",
-                  default="-", metavar="FILE",
-                  help="Unpadded FASTA output filename")
-parser.add_option("--log", dest="log",
-                  default="-", metavar="FILE",
-                  help="MIRA logging output filename")
-parser.add_option("-v", "--version", dest="version",
-                  default=False, action="store_true",
-                  help="Show version and quit")
+parser.add_option(
+    "-m",
+    "--manifest",
+    dest="manifest",
+    default=None,
+    metavar="FILE",
+    help="MIRA manifest filename",
+)
+parser.add_option(
+    "--maf", dest="maf", default="-", metavar="FILE", help="MIRA MAF output filename"
+)
+parser.add_option(
+    "--bam",
+    dest="bam",
+    default="-",
+    metavar="FILE",
+    help="Unpadded BAM output filename",
+)
+parser.add_option(
+    "--fasta",
+    dest="fasta",
+    default="-",
+    metavar="FILE",
+    help="Unpadded FASTA output filename",
+)
+parser.add_option(
+    "--log",
+    dest="log",
+    default="-",
+    metavar="FILE",
+    help="MIRA logging output filename",
+)
+parser.add_option(
+    "-v",
+    "--version",
+    dest="version",
+    default=False,
+    action="store_true",
+    help="Show version and quit",
+)
 options, args = parser.parse_args()
 manifest = options.manifest
 out_maf = options.maf
@@ -72,14 +100,20 @@ if "MIRA4" in os.environ:
     mira_path = os.environ["MIRA4"]
     mira_binary = os.path.join(mira_path, "mira")
     if not os.path.isfile(mira_binary):
-        sys.exit("Missing mira under $MIRA4, %r\nFolder contained: %s"
-                 % (mira_binary, ", ".join(os.listdir(mira_path))))
+        sys.exit(
+            "Missing mira under $MIRA4, %r\nFolder contained: %s"
+            % (mira_binary, ", ".join(os.listdir(mira_path)))
+        )
     mira_convert = os.path.join(mira_path, "miraconvert")
     if not os.path.isfile(mira_convert):
-        sys.exit("Missing miraconvert under $MIRA4, %r\nFolder contained: %s"
-                 % (mira_convert, ", ".join(os.listdir(mira_path))))
+        sys.exit(
+            "Missing miraconvert under $MIRA4, %r\nFolder contained: %s"
+            % (mira_convert, ", ".join(os.listdir(mira_path)))
+        )
 else:
-    sys.stderr.write("DEBUG: Since $MIRA4 is not set, assuming mira binaries are on $PATH.\n")
+    sys.stderr.write(
+        "DEBUG: Since $MIRA4 is not set, assuming mira binaries are on $PATH.\n"
+    )
     mira_path = None
     mira_binary = "mira"
     mira_convert = "miraconvert"
@@ -178,8 +212,7 @@ def collect_output(temp, name, handle):
         ref_fasta = "%s/%s_out_ReferenceStrain.padded.fasta" % (f, name)
 
     missing = False
-    for old, new in [(old_maf, out_maf),
-                     (old_fasta, out_fasta)]:
+    for old, new in [(old_maf, out_maf), (old_fasta, out_fasta)]:
         if not os.path.isfile(old):
             missing = True
         elif not new or new == "-":
@@ -245,20 +278,22 @@ if out_log and out_log != "-":
     handle = open(out_log, "w")
 else:
     handle = open(os.devnull, "w")
-handle.write("======================== MIRA manifest (instructions) ========================\n")
+handle.write(
+    "======================== MIRA manifest (instructions) ========================\n"
+)
 m = open(manifest, "rU")
 for line in m:
     handle.write(line)
 m.close()
 del m
 handle.write("\n")
-handle.write("============================ Starting MIRA now ===============================\n")
+handle.write(
+    "============================ Starting MIRA now ===============================\n"
+)
 handle.flush()
 try:
     # Run MIRA
-    child = subprocess.Popen(cmd_list,
-                             stdout=handle,
-                             stderr=subprocess.STDOUT)
+    child = subprocess.Popen(cmd_list, stdout=handle, stderr=subprocess.STDOUT)
 except Exception as err:
     log_manifest(manifest)
     sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (cmd, err))
@@ -272,7 +307,9 @@ assert not stdout and not stderr  # Should be empty as sent to handle
 run_time = time.time() - start_time
 return_code = child.returncode
 handle.write("\n")
-handle.write("============================ MIRA has finished ===============================\n")
+handle.write(
+    "============================ MIRA has finished ===============================\n"
+)
 handle.write("MIRA took %0.2f hours\n" % (run_time / 3600.0))
 if return_code:
     print("MIRA took %0.2f hours" % (run_time / 3600.0))
@@ -288,22 +325,30 @@ handle.flush()
 
 if os.path.isfile("MIRA_assembly/MIRA_d_results/ec.log"):
     handle.write("\n")
-    handle.write("====================== Extract Large Contigs failed ==========================\n")
+    handle.write(
+        "====================== Extract Large Contigs failed ==========================\n"
+    )
     e = open("MIRA_assembly/MIRA_d_results/ec.log", "rU")
     for line in e:
         handle.write(line)
     e.close()
-    handle.write("============================ (end of ec.log) =================================\n")
+    handle.write(
+        "============================ (end of ec.log) =================================\n"
+    )
     handle.flush()
 
 # print("Collecting output...")
 start_time = time.time()
 collect_output(temp, name, handle)
 collect_time = time.time() - start_time
-handle.write("MIRA took %0.2f hours; collecting output %0.2f minutes\n"
-             % (run_time / 3600.0, collect_time / 60.0))
-print("MIRA took %0.2f hours; collecting output %0.2f minutes\n"
-      % (run_time / 3600.0, collect_time / 60.0))
+handle.write(
+    "MIRA took %0.2f hours; collecting output %0.2f minutes\n"
+    % (run_time / 3600.0, collect_time / 60.0)
+)
+print(
+    "MIRA took %0.2f hours; collecting output %0.2f minutes\n"
+    % (run_time / 3600.0, collect_time / 60.0)
+)
 
 if os.path.isfile("MIRA_assembly/MIRA_d_results/ec.log"):
     # Treat as an error, but doing this AFTER collect_output

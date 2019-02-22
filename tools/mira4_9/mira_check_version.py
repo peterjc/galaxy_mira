@@ -64,9 +64,12 @@ def get_version(mira_binary):
     # however there is some pipe error when doing that here.
     cmd = [mira_binary, "-v"]
     try:
-        child = subprocess.Popen(cmd, universal_newlines=True,
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.STDOUT)
+        child = subprocess.Popen(
+            cmd,
+            universal_newlines=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
     except Exception as err:
         sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (" ".join(cmd), err))
         sys.exit(1)
@@ -97,5 +100,7 @@ else:
 
 mira_ver = get_version(mira_binary)
 if expected and not mira_ver.strip().startswith(expected):
-    sys.exit("Expected MIRA v%s, but %s reports: %s" % (expected, mira_binary, mira_ver))
+    sys.exit(
+        "Expected MIRA v%s, but %s reports: %s" % (expected, mira_binary, mira_ver)
+    )
 print(mira_ver)

@@ -29,8 +29,9 @@ def run(cmd):
     # Avoid using shell=True when we call subprocess to ensure if the Python
     # script is killed, so too is the child process.
     try:
-        child = subprocess.Popen(cmd, universal_newlines=True,
-                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        child = subprocess.Popen(
+            cmd, universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        )
     except Exception as err:
         sys.exit("Error invoking command:\n%s\n\n%s\n" % (" ".join(cmd), err))
     # Use .communicate as can get deadlocks with .wait(),
@@ -39,9 +40,14 @@ def run(cmd):
     if return_code:
         cmd_str = " ".join(cmd)  # doesn't quote spaces etc
         if stderr and stdout:
-            sys.exit("Return code %i from command:\n%s\n\n%s\n\n%s" % (return_code, cmd_str, stdout, stderr))
+            sys.exit(
+                "Return code %i from command:\n%s\n\n%s\n\n%s"
+                % (return_code, cmd_str, stdout, stderr)
+            )
         else:
-            sys.exit("Return code %i from command:\n%s\n%s" % (return_code, cmd_str, stderr))
+            sys.exit(
+                "Return code %i from command:\n%s\n%s" % (return_code, cmd_str, stderr)
+            )
 
 
 def get_version(mira_binary):
@@ -50,9 +56,7 @@ def get_version(mira_binary):
     # however there is some pipe error when doing that here.
     cmd = [mira_binary, "-v"]
     try:
-        child = subprocess.Popen(cmd,
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.STDOUT)
+        child = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except Exception as err:
         sys.stderr.write("Error invoking command:\n%s\n\n%s\n" % (" ".join(cmd), err))
         sys.exit(1)
@@ -62,43 +66,63 @@ def get_version(mira_binary):
 
 
 # Parse Command Line
-usage = """Galaxy MIRA4 wrapper script v%s - use as follows:
+usage = (
+    """Galaxy MIRA4 wrapper script v%s - use as follows:
 
 $ python mira4_convert.py ...
 
 This will run the MIRA miraconvert binary and collect its output files as directed.
-""" % WRAPPER_VER
+"""
+    % WRAPPER_VER
+)
 parser = OptionParser(usage=usage)
-parser.add_option("--input", dest="input",
-                  default=None, metavar="FILE",
-                  help="MIRA input filename")
-parser.add_option("-x", "--min_length", dest="min_length",
-                  default="0",
-                  help="Minimum contig length")
-parser.add_option("-y", "--min_cover", dest="min_cover",
-                  default="0",
-                  help="Minimum average contig coverage")
-parser.add_option("-z", "--min_reads", dest="min_reads",
-                  default="0",
-                  help="Minimum reads per contig")
-parser.add_option("--maf", dest="maf",
-                  default="", metavar="FILE",
-                  help="MIRA MAF output filename")
-parser.add_option("--ace", dest="ace",
-                  default="", metavar="FILE",
-                  help="ACE output filename")
-parser.add_option("--bam", dest="bam",
-                  default="", metavar="FILE",
-                  help="Unpadded BAM output filename")
-parser.add_option("--fasta", dest="fasta",
-                  default="", metavar="FILE",
-                  help="Unpadded FASTA output filename")
-parser.add_option("--cstats", dest="cstats",
-                  default="", metavar="FILE",
-                  help="Contig statistics filename")
-parser.add_option("-v", "--version", dest="version",
-                  default=False, action="store_true",
-                  help="Show version and quit")
+parser.add_option(
+    "--input", dest="input", default=None, metavar="FILE", help="MIRA input filename"
+)
+parser.add_option(
+    "-x", "--min_length", dest="min_length", default="0", help="Minimum contig length"
+)
+parser.add_option(
+    "-y",
+    "--min_cover",
+    dest="min_cover",
+    default="0",
+    help="Minimum average contig coverage",
+)
+parser.add_option(
+    "-z", "--min_reads", dest="min_reads", default="0", help="Minimum reads per contig"
+)
+parser.add_option(
+    "--maf", dest="maf", default="", metavar="FILE", help="MIRA MAF output filename"
+)
+parser.add_option(
+    "--ace", dest="ace", default="", metavar="FILE", help="ACE output filename"
+)
+parser.add_option(
+    "--bam", dest="bam", default="", metavar="FILE", help="Unpadded BAM output filename"
+)
+parser.add_option(
+    "--fasta",
+    dest="fasta",
+    default="",
+    metavar="FILE",
+    help="Unpadded FASTA output filename",
+)
+parser.add_option(
+    "--cstats",
+    dest="cstats",
+    default="",
+    metavar="FILE",
+    help="Contig statistics filename",
+)
+parser.add_option(
+    "-v",
+    "--version",
+    dest="version",
+    default=False,
+    action="store_true",
+    help="Show version and quit",
+)
 options, args = parser.parse_args()
 if args:
     sys.exit("Expected options (e.g. --input example.maf), not arguments")
@@ -114,16 +138,22 @@ if "MIRA4" in os.environ:
     mira_path = os.environ["MIRA4"]
     mira_convert = os.path.join(mira_path, "miraconvert")
     if not os.path.isfile(mira_convert):
-        sys.exit("Missing miraconvert under $MIRA4, %r\nFolder contained: %s"
-                 % (mira_convert, ", ".join(os.listdir(mira_path))))
+        sys.exit(
+            "Missing miraconvert under $MIRA4, %r\nFolder contained: %s"
+            % (mira_convert, ", ".join(os.listdir(mira_path)))
+        )
 else:
-    sys.stderr.write("DEBUG: Since $MIRA4 is not set, assuming mira binaries are on $PATH.\n")
+    sys.stderr.write(
+        "DEBUG: Since $MIRA4 is not set, assuming mira binaries are on $PATH.\n"
+    )
     mira_path = None
     mira_convert = "miraconvert"
 
 mira_convert_ver = get_version(mira_convert)
 if not mira_convert_ver.strip().startswith("4.0"):
-    sys.exit("This wrapper is for MIRA V4.0, not:\n%s\n%s" % (mira_convert_ver, mira_convert))
+    sys.exit(
+        "This wrapper is for MIRA V4.0, not:\n%s\n%s" % (mira_convert_ver, mira_convert)
+    )
 if options.version:
     print("%s, MIRA wrapper version %s" % (mira_convert_ver, WRAPPER_VER))
     sys.exit(0)
