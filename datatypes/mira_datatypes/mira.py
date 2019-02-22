@@ -38,7 +38,7 @@ class MiraAssemblyFormat(Text):
             return Text.merge(split_files, output_file)
         if not split_files:
             raise ValueError(
-                "Given no MIRA, %r, to merge into %s" % (split_files, output_file)
+                "No MIRA files to merge, %r, into %r" % (split_files, output_file)
             )
         raise NotImplementedError(
             "Merging MIRA Assembly Files has not been implemented"
