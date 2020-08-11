@@ -104,7 +104,7 @@ before_install:
 
 install:
  - cd ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH}
- - ln -s ${TRAVIS_BUILD_DIR}/datatypes/mira_datatypes/mira.py lib/galaxy/datatypes/mira.py
+ - cp ${TRAVIS_BUILD_DIR}/datatypes/mira_datatypes/mira.py lib/galaxy/datatypes/mira.py
  - ln -s ${TRAVIS_BUILD_DIR}/.travis.datatypes_conf.xml datatypes_conf.xml
 
 # Testing tools in Galaxy
