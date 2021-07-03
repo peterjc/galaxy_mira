@@ -1,17 +1,17 @@
-<tool id="mira_assembler" name="Assemble with MIRA v3.4" version="0.0.12">
+<tool id="mira_assembler" name="Assemble with MIRA v3.4" version="0.0.13">
     <description>Takes Sanger, Roche, Illumina, and Ion Torrent data</description>
     <requirements>
-        <requirement type="package" version="3.4.1.1">MIRA</requirement>
+        <requirement type="package" version="3.4.1.1">mira</requirement>
     </requirements>
     <version_command>
-python $__tool_directory__/mira.py -v
+        mira --version | perl -wnE'print "$1\n" for /This is MIRA V([\d\.]+)/g'
     </version_command>
     <command detect_errors="aggressive">
-python $__tool_directory__/mira.py mira '$out_fasta' '$out_qual' '$out_ace' '$out_caf' '$out_wig' '$out_log'
-##Give the wrapper script list of output filenames, then the mira command...
-mira --job=$job_method,$job_type,$job_quality
-
-##Input files
+    <![CDATA[
+mira
+--project=mira
+--job=$job_method,$job_type,$job_quality
+-GE:not="\${GALAXY_SLOTS:-1}"
 #if $condBackbone.use == "true":
     ## Can this be linked to job_method as well? If mapping we need the backbone...
     -SB:lb=1:bft=fasta -FN:bbin=${condBackbone.filename}
@@ -21,17 +21,20 @@ mira --job=$job_method,$job_type,$job_quality
     ## Not easy in Galaxy to add sanger to --job, so use load_sequence_data(lsd) instead
     ## I expect hard trimmed FASTQ files with no NCBI traceinfo XML file
     -LR:lsd=1:mxti=0:ft=fastq -FN:fqi=${condSanger.filename}
+    "${condSanger.sanger_extra}"
 #end if
 #if $condRoche.use == "true":
     454_SETTINGS
     ## Not easy in Galaxy to add 454 to --job, so use load_sequence_data(lsd) instead
     ## I expect hard trimmed FASTQ files with no NCBI traceinfo XML file
     -LR:lsd=1:mxti=0:ft=fastq -FN:fqi=${condRoche.filename}
+    "${condRoche.roche_extra}"
 #end if
 #if $condIllumina.use == "true":
     SOLEXA_SETTINGS
     ## Not easy in Galaxy to add solexa to --job, so use load_sequence_data(lsd) instead
     -LR:lsd=1:ft=fastq -FN:fqi=${condIllumina.filename}
+    "${condIllumina.solexa_extra}"
     ##TODO - Look at -LR FASTQ qual offset (fqqo)
 #end if
 #if $condIonTorrent.use == "true":
@@ -39,24 +42,28 @@ mira --job=$job_method,$job_type,$job_quality
     ## Not easy in Galaxy to add iontor to --job, so use load_sequence_data(lsd) instead
     ## I expect hard trimmed FASTQ files with no NCBI traceinfo XML file
     -LR:lsd=1:mxti=0:ft=fastq -FN:fqi=${condIonTorrent.filename}
+    "${condIonTorrent.torrent_extra}"
 #end if
 
-##Output files
 COMMON_SETTINGS
+"$common_extra"
 
 ##ignore warnings about long read names
 -MI:somrnl=0
 
 ##Explicitly request the FASTA (+QUAL), CAF, ACE, WIG output
 ##Explicitly disable formats we won't use like MAF (reduce IO)
--OUT:orf=1:orc=1:ora=1:orw=1:orm=0:org=0:ors=0
+-OUT:orf=$output_fsa:orc=$output_caf:ora=$output_ace:orw=$output_wig:orm=0:org=0:ors=0
 
 ##remove_rollover_tmps, remove_tmp_directory
 -OUT:rrot=1:rtd=1
 
 ##put mira temp directory on local storage
--DI:trt=/tmp
-
+##NO, must run from NFS or problems with multiple jobs/same name can arise
+##when using job scheduler
+##-DI:trt=/tmp
+-MI:sonfs=no
+    ]]>
     </command>
     <inputs>
         <param name="job_method" type="select" label="Assembly method" help="Mapping mode requires backbone/reference sequence(s)">
@@ -93,6 +100,16 @@ COMMON_SETTINGS
             <when value="false" />
             <when value="true">
                 <param name="filename" type="data" format="fastq" label="Sanger/Capillary reads file" help="FASTQ format" />
+                <param name="sanger_extra" type="text" size="100" value="" label="Extra Sanger parameters for MIRA">
+                    <sanitizer invalid_char="">
+                        <valid initial=",string.letters,string.digits">
+                            <add value=" " />
+                            <add value="-" />
+                            <add value=":" />
+                            <add value="=" />
+                        </valid>
+                    </sanitizer>
+                </param>
             </when>
         </conditional>
         <!-- Roche 454 -->
@@ -105,6 +122,16 @@ COMMON_SETTINGS
             <when value="true">
                 <!-- TODO? Support SFF files directly, e.g. with sff_extract, but will need linker sequences -->
                 <param name="filename" type="data" format="fastq" label="Roche 454 reads file" help="FASTQ format" />
+                <param name="roche_extra" type="text" size="100" value="" label="Extra 454 parameters for MIRA">
+                    <sanitizer invalid_char="">
+                        <valid initial=",string.letters,string.digits">
+                            <add value=" " />
+                            <add value="-" />
+                            <add value=":" />
+                            <add value="=" />
+                        </valid>
+                    </sanitizer>
+                </param>
             </when>
         </conditional>
         <!-- Illumina -->
@@ -116,6 +143,16 @@ COMMON_SETTINGS
             <when value="false" />
             <when value="true">
                 <param name="filename" type="data" format="fastq" label="Solexa/Illumina reads file" help="FASTQ format" />
+                <param name="solexa_extra" type="text" size="100" value="" label="Extra Illumina parameters for MIRA">
+                    <sanitizer invalid_char="">
+                        <valid initial=",string.letters,string.digits">
+                            <add value=" " />
+                            <add value="-" />
+                            <add value=":" />
+                            <add value="=" />
+                        </valid>
+                    </sanitizer>
+                </param>
             </when>
         </conditional>
         <!-- Ion Torrent -->
@@ -128,16 +165,50 @@ COMMON_SETTINGS
             <when value="true">
                 <!-- TODO? Support SFF files directly, e.g. with sff_extract -->
                 <param name="filename" type="data" format="fastq" label="Ion Torrent reads file" help="FASTQ format" />
+                <param name="torrent_extra" type="text" size="100" value="" label="Extra IonTorrent parameters for MIRA">
+                    <sanitizer invalid_char="">
+                        <valid initial=",string.letters,string.digits">
+                            <add value=" " />
+                            <add value="-" />
+                            <add value=":" />
+                            <add value="=" />
+                        </valid>
+                    </sanitizer>
+                </param>
             </when>
         </conditional>
+        <param name="common_extra" type="text" size="100" value="" label="Extra common parameters for MIRA">
+            <sanitizer invalid_char="">
+                <valid initial=",string.letters,string.digits">
+                    <add value=" " />
+                    <add value="-" />
+                    <add value=":" />
+                    <add value="=" />
+                </valid>
+            </sanitizer>
+        </param>
+        <param name="output_fsa" type="boolean" truevalue="1" falsevalue="0" checked="yes" label="Output FASTA" />
+        <param name="output_caf" type="boolean" truevalue="1" falsevalue="0" checked="0" label="Output CAF" />
+        <param name="output_ace" type="boolean" truevalue="1" falsevalue="0" checked="0" label="Output ACE" />
+        <param name="output_wig" type="boolean" truevalue="1" falsevalue="0" checked="0" label="Output WIG" />
     </inputs>
     <outputs>
-        <data name="out_fasta" format="fasta" label="MIRA contigs (FASTA)" />
-        <data name="out_qual" format="qual454" label="MIRA contigs (QUAL)" />
-        <data name="out_caf" format="txt" label="MIRA contigs (CAF)" />
-        <data name="out_ace" format="txt" label="MIRA contigs (ACE)" />
-        <data name="out_wig" format="wig" label="MIRA coverage (Wiggle)" />
-        <data name="out_log" format="txt" label="MIRA log" />
+        <data name="out_log" format="txt" label="MIRA log" from_work_dir="mira_assembly/mira_d_info/mira_info_assembly.txt" />
+        <data name="out_fasta" format="fasta" label="MIRA contigs (FASTA)" from_work_dir="mira_assembly/mira_d_results/mira_out.unpadded.fasta">
+            <filter>output_fsa is True</filter>
+        </data>
+        <data name="out_qual" format="qual454" label="MIRA contigs (QUAL)" from_work_dir="mira_assembly/mira_d_results/mira_out.unpadded.fasta.qual">
+            <filter>output_fsa is True</filter>
+        </data>
+        <data name="out_caf" format="txt" label="MIRA contigs (CAF)" from_work_dir="mira_assembly/mira_d_results/mira_out.caf" >
+            <filter>output_caf is True</filter>
+        </data>
+        <data name="out_ace" format="txt" label="MIRA contigs (ACE)" from_work_dir="mira_assembly/mira_d_results/mira_out.ace">
+            <filter>output_ace is True</filter>
+        </data>
+        <data name="out_wig" format="wig" label="MIRA coverage (Wiggle)" from_work_dir="mira_assembly/mira_d_results/mira_out.wig">
+            <filter>output_wig is True</filter>
+        </data>
     </outputs>
     <tests>
         <!-- Based on the MIRA v3.4.1.1 bundled minidemo/estdemo2 which uses
@@ -152,12 +223,30 @@ COMMON_SETTINGS
             <param name="condRoche|use" value="false" />
             <param name="condIllumina|use" value="false" />
             <param name="condIonTorrent|use" value="false" />
+            <param name="output_fasta" value="true" />
+            <param name="output_caf" value="true" />
+            <param name="output_ace" value="true" />
             <output name="out_fasta" file="tvc_contigs.fasta" ftype="fasta" />
             <output name="out_qual" file="empty_file.dat" compare="contains" />
             <output name="out_caf" file="empty_file.dat" compare="contains" />
             <output name="out_ace" file="empty_file.dat" compare="contains" />
-            <output name="out_wig" file="empty_file.dat" compare="contains" />
             <output name="out_log" file="empty_file.dat" compare="contains" />
+        </test>
+        <test>
+            <param name="job_method" value="denovo" />
+            <param name="job_type" value="est" />
+            <param name="job_qual" value="accurate" />
+            <param name="condBackbone|use" value="false" />
+            <param name="condSanger|use" value="true" />
+            <param name="condSanger|filename" value="tvc_mini.fastq" ftype="fastq" />
+            <param name="condRoche|use" value="false" />
+            <param name="condIllumina|use" value="false" />
+            <param name="condIonTorrent|use" value="false" />
+            <param name="output_fasta" value="true" />
+            <param name="output_wig" value="true" />
+            <param name="sanger_extra" value="-CL:qc=yes:qcmq=35" />
+            <output name="out_fasta" file="tvc_contigs_q35.fasta" ftype="fasta" />
+            <output name="out_wig" file="tvc_contigs_q35.wig" ftype="wig" />
         </test>
     </tests>
     <help>
