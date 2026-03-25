@@ -2,6 +2,7 @@
     <description>Takes Sanger, Roche, Illumina, and Ion Torrent data</description>
     <requirements>
         <requirement type="package" version="3.4.1.1">MIRA</requirement>
+        <requirement type="package" version="3.11">python</requirement>
     </requirements>
     <version_command>
 python $__tool_directory__/mira.py -v
