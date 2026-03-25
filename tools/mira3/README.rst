@@ -88,6 +88,7 @@ v0.0.11 - Tool definition now embeds citation information.
 v0.0.12 - Python 3 compatible syntax (internal change only).
         - Use ``<command detect_errors="aggressive">`` (internal change only).
         - Single quote command line arguments (internal change only).
+v0.0.13 - Make Python 3 dependency explicit for use in containers.
 ======= ======================================================================
 
 

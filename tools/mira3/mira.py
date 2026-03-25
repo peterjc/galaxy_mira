@@ -9,7 +9,7 @@ import subprocess
 import sys
 import time
 
-WRAPPER_VER = "0.0.12"  # Keep in sync with the XML file
+WRAPPER_VER = "0.0.13"  # Keep in sync with the XML file
 
 
 def get_version():
