@@ -1,4 +1,4 @@
-<tool id="mira_assembler" name="Assemble with MIRA v3.4" version="0.0.12+galaxy@VERSION_SUFFIX@">
+<tool id="mira_assembler" name="Assemble with MIRA v3.4" version="0.0.12+galaxy@VERSION_SUFFIX@" profile="24.0">
     <description>Takes Sanger, Roche, Illumina, and Ion Torrent data</description>
     <macros>
         <token name="@VERSION_SUFFIX@">0</token>
@@ -8,10 +8,10 @@
         <requirement type="package" version="3.11">python</requirement>
     </requirements>
     <version_command>
-python $__tool_directory__/mira.py -v
+python '$__tool_directory__/mira.py' -v
     </version_command>
     <command detect_errors="aggressive">
-python $__tool_directory__/mira.py mira '$out_fasta' '$out_qual' '$out_ace' '$out_caf' '$out_wig' '$out_log'
+python '$__tool_directory__/mira.py' mira '$out_fasta' '$out_qual' '$out_ace' '$out_caf' '$out_wig' '$out_log'
 ##Give the wrapper script list of output filenames, then the mira command...
 mira --job=$job_method,$job_type,$job_quality
 
